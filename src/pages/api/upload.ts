@@ -43,6 +43,9 @@ export default async function handler(
 
     try {
         const resp = await client.post(`/channels/${env.DISCORD_IMAGES_CHANNEL_ID}/messages`, {
+            body: {
+                content: `Uploaded by testUSER HAHA`
+            },
             files: [{
                 name: name + "." + type,
                 data: buff,
