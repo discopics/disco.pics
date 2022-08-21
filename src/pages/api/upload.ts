@@ -15,7 +15,7 @@ const supportedTypes = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
 
 export default async function handler(
     req: Request,
-    res: NextApiResponse<Response<any, any>>
+    res: NextApiResponse<Response<unknown, unknown>>
 ) {
     const { name, type } = req.query;
 
