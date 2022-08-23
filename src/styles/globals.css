@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sidebar {
+    background: #171738;
+    height: 50%;
+    width: 50px;
+    border-radius: 0 100px 100px 0;
+    position: relative;
+}
+
+.sidebar::before {
+    content: "";
+    position: absolute;
+    
+    background-color: transparent;
+    bottom: -100px;
+    height: 100px;
+    width: 25px;
+    transform: scaleY(1.1);
+    border-top-left-radius: 100px;
+    box-shadow: 0 -50px 0 0 #171738;
+}
+
+.sidebar::after {
+    content: "";
+    position: absolute;
+    
+    background-color: transparent;
+    top: -100px;
+    height: 100px;
+    width: 25px;
+    transform: scale(-1) scaleY(1.1);
+    border-top-right-radius: 100px;
+    box-shadow: 0 -50px 0 0 #171738;
+}
