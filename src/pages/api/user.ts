@@ -4,8 +4,14 @@ import { unstable_getServerSession as getServerSession } from "next-auth";
 import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
 import { createUser, getAllImagesByUser, getUser } from "../../lib/redis";
 
+type Request = NextApiRequest & {
+  query: {
+    images?: boolean;
+  };
+};
+
 export default async function handler(
-  req: NextApiRequest,
+  req: Request,
   res: NextApiResponse<Response<unknown, unknown>>
 ) {
   const session = await getServerSession(req, res, nextAuthOptions);
@@ -33,6 +39,13 @@ export default async function handler(
         created_at: new Date().toISOString(),
         email: session.user.email,
         token_number: 0,
+      });
+    }
+
+    if (req.query.images == false) {
+      return res.status(200).json({
+        success: Status.Success,
+        data: { user: user },
       });
     }
 
