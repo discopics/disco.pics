@@ -51,12 +51,8 @@ const Home: NextPage = () => {
     <Layout>
       {/* Header */}
       <header className="sticky top-0 h-12 z-50 flex items-center justify-between px-5 bg-light dark:bg-dark w-full dark:text-white">
-        <div>
-          <span className="dark:text-slate-400">Hello,</span>{" "}
-          <span className="text-lg">{session?.user?.name}</span>
-        </div>
-
-        <div>
+        🔥 BornFire
+        <div className="hidden md:block">
           {!session ? (
             <button
               className="inline-flex gap-1 px-2 py-1 rounded-lg hover:bg-gray-700"
@@ -120,58 +116,6 @@ const Home: NextPage = () => {
                   />
                 </svg>
               </button>
-
-              <div className="group">
-                <button
-                  id="dropdownInformationButton"
-                  className="border text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-1 gap-2 text-center inline-flex items-center "
-                  type="button"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className="rounded-full"
-                    src={session.user.image}
-                    width={30}
-                    alt=""
-                  />
-                  {session.user.name}
-                </button>
-                <div className="hidden group-hover:block z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                  <div className="py-3 px-4 text-sm text-gray-900 dark:text-white">
-                    <div>
-                      {session.user.name}#{session.user.discriminator}
-                    </div>
-                    <div className="font-medium truncate">
-                      {session.user.email}
-                    </div>
-                  </div>
-                  <div className="py-1">
-                    <button
-                      className="inline-flex gap-1 px-2 py-1 rounded-lg hover:bg-gray-700"
-                      onClick={() => signOut()}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z"
-                          clipRule="evenodd"
-                        />
-                        <path
-                          fillRule="evenodd"
-                          d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-.943a.75.75 0 10-1.004-1.114l-2.5 2.25a.75.75 0 000 1.114l2.5 2.25a.75.75 0 101.004-1.114l-1.048-.943h9.546A.75.75 0 0019 10z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Sign Out
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           )}
         </div>
@@ -181,21 +125,29 @@ const Home: NextPage = () => {
         {session ? (
           <>
             {user ? (
-              <div className="p-4">
-                <ResponsiveMasonry
-                  columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 4 }}
-                >
-                  <Masonry gutter="10px">
-                    {/* Map through images in reverse */}
-                    {user.images
-                      .slice(0)
-                      .reverse()
-                      .map((image) => (
-                        <ImgView key={image.slug} img={image} />
-                      ))}
-                  </Masonry>
-                </ResponsiveMasonry>
-              </div>
+              <>
+                <div className="p-4">
+                  <div className="mb-4">
+                    <span className="text-slate-400 text-lg">Hello,</span>{" "}
+                    <span className="text-xl text-white">
+                      {session?.user?.name}
+                    </span>
+                  </div>
+                  <ResponsiveMasonry
+                    columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 4 }}
+                  >
+                    <Masonry gutter="10px">
+                      {/* Map through images in reverse */}
+                      {user.images
+                        .slice(0)
+                        .reverse()
+                        .map((image) => (
+                          <ImgView key={image.slug} img={image} />
+                        ))}
+                    </Masonry>
+                  </ResponsiveMasonry>
+                </div>
+              </>
             ) : (
               <></>
             )}
