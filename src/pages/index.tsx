@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ImgView from "../components/ImgView";
 import Layout from "../components/Layout";
 import { UserType } from "../types/Types";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { useModals } from "../context/Modal";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -14,16 +15,21 @@ const Home: NextPage = () => {
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const [ups, setUps] = useState<number>(0);
+  const { open, openedModals, close } = useModals();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+
+    (async () => {
       const response = await fetch("/api/user");
       const user = await response.json();
       console.log(user);
       setUser(user.data);
-    };
-    fetchUserData();
+    })();
   }, [ups]);
+
+  useEffect(() => {
+    console.log(openedModals);
+  }, [openedModals]);
 
   const uploadImg = async () => {
     const reader = new FileReader();
@@ -55,8 +61,8 @@ const Home: NextPage = () => {
         <div className="hidden md:block">
           {!session ? (
             <button
-              className="inline-flex gap-1 px-2 py-1 rounded-lg hover:bg-gray-700"
-              onClick={() => signIn()}
+              className="inline-flex justify-center items-center gap-1 py-2 px-3 rounded-lg hover:bg-white/10"
+              onClick={() => signIn("discord")}
             >
               Sign In
               <svg
@@ -79,8 +85,11 @@ const Home: NextPage = () => {
             </button>
           ) : (
             <div className="flex gap-4">
+              <button onClick={() => close("test")}>close</button>
               <button
                 onClick={() => {
+                  open("test");
+                  return
                   setUploadLoading(true);
                   // Take file input
                   const fileInput = document.createElement("input");
