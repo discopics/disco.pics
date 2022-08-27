@@ -22,7 +22,7 @@ function ImgView({ img }: { img: ImageType }) {
               isCopied && "bg-green-400"
             }`}
             onClick={() => {
-              navigator.clipboard.writeText(img.img_url);
+              navigator.clipboard.writeText("http://localhost:3000/i/" + img.slug);
               setIsCopied(true);
 
               setTimeout(() => {
@@ -67,7 +67,7 @@ function ImgView({ img }: { img: ImageType }) {
           <button
             className="inline-flex gap-1 p-2 rounded-lg hover:bg-blue-400 bg-slate-300/50 m-3"
             onClick={() => {
-              window.open(img.img_url, "_blank");
+              window.open("http://localhost:3000/i/" + img.slug, "_blank");
             }}
           >
             <svg
