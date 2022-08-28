@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Topbar from "./Topbar";
 
 function Layout({ children }: { children: React.ReactNode }) {
+
   return (
     <div className="flex dark">
       <div>
@@ -11,8 +12,8 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="w-full bg-dark">
         {/* main */}
-        <Topbar />
-        {children}
+        <Topbar/>
+        <div>{children}</div>
       </div>
     </div>
   );

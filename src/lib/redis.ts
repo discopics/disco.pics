@@ -28,7 +28,13 @@ const userSchema = new Schema(
     id: { type: "string", indexed: true },
     email: { type: "string" },
     created_at: { type: "date" },
-    token_number: { type: "number" }, // Last token regenned
+    token_number: { type: "number" },
+    embed_title: { type: "string" },
+    embed_site_name: { type: "string" },
+    embed_site_url: { type: "string" },
+    embed_colour: { type: "string" },
+    embed_author_name: { type: "string" },
+    embed_desc: { type: "string" },
   },
   {
     dataStructure: "JSON",
@@ -36,7 +42,7 @@ const userSchema = new Schema(
 );
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function createIndex() {
+export async function createIndex() {
   await connect();
 
   const imageRepository = client.fetchRepository(schema);
@@ -44,6 +50,69 @@ async function createIndex() {
   const userRepository = client.fetchRepository(userSchema);
   userRepository.createIndex();
   console.log("Index created");
+}
+
+export async function checkIfSlugExists(slug: string) {
+  await connect();
+  const imageRepository = client.fetchRepository(schema);
+  const result = await imageRepository
+    .search()
+    .where("slug")
+    .equals(slug)
+    .all();
+  return result.length > 0;
+}
+
+export async function updateUserEmbedSettings(
+  id: string,
+  embed_title: string,
+  embed_site_name: string,
+  embed_site_url: string,
+  embed_colour: string,
+  embed_author_name: string,
+  embed_desc: string
+) {
+  await connect();
+
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  userEntity.embed_title = embed_title != undefined ? embed_title : null;
+  userEntity.embed_site_name =
+    embed_site_name != undefined ? embed_site_name : null;
+  userEntity.embed_site_url =
+    embed_site_url != undefined ? embed_site_url : null;
+  userEntity.embed_colour = embed_colour != undefined ? embed_colour : null;
+  userEntity.embed_author_name =
+    embed_author_name != undefined ? embed_author_name : null;
+  userEntity.embed_desc = embed_desc != undefined ? embed_desc : null;
+
+  await userRepository.save(userEntity);
+
+  return userEntity;
+}
+
+export async function deleteImage(slug: string) {
+  await connect();
+  const imageRepository = client.fetchRepository(schema);
+  const result = await imageRepository
+    .search()
+    .where("slug")
+    .equals(slug)
+    .first();
+
+  if (result) {
+    await imageRepository.remove(result.entityId);
+  }
+
+  return result?.toJSON();
 }
 
 export async function getUser(id: string) {

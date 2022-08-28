@@ -9,7 +9,15 @@ const dateToText = (date: string) => {
   return `${month}/${day}/${year}`;
 };
 
-function ImgView({ img }: { img: ImageType }) {
+function ImgView({
+  img,
+  ups,
+  setUps,
+}: {
+  img: ImageType;
+  ups: number;
+  setUps: (ups: number) => void;
+}) {
   const [isCopied, setIsCopied] = useState(false);
 
   return (
@@ -18,9 +26,13 @@ function ImgView({ img }: { img: ImageType }) {
         <div className="absolute flex right-2 justify-end z-0">
           {/* Copy to clipboard button */}
           <button
-            className={`${ isCopied ? "bg-rose-400/40" : "dark:hover:bg-rose-400/30" } inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:bg-rose-400/20 m-3 mr-1`}
+            className={`${
+              isCopied ? "bg-rose-400/40" : "dark:hover:bg-rose-400/30"
+            } inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:bg-rose-400/20 m-3 mr-1`}
             onClick={() => {
-              navigator.clipboard.writeText("http://localhost:3000/i/" + img.slug);
+              navigator.clipboard.writeText(
+                "http://localhost:3000/" + img.slug
+              );
               setIsCopied(true);
 
               setTimeout(() => {
@@ -30,7 +42,14 @@ function ImgView({ img }: { img: ImageType }) {
           >
             {!isCopied ? (
               <svg className="w-5 h-5 scale-90" viewBox="0 0 16 16">
-                <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.25 4.25v-2.5h-9.5v9.5h2.5m.5-6.5v9.5h9.5v-9.5z" />
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M11.25 4.25v-2.5h-9.5v9.5h2.5m.5-6.5v9.5h9.5v-9.5z"
+                />
               </svg>
             ) : (
               <svg
@@ -54,11 +73,41 @@ function ImgView({ img }: { img: ImageType }) {
           <button
             className="inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:hover:bg-rose-400/30 dark:bg-rose-400/20 mt-3 ml-1"
             onClick={() => {
-              window.open("http://localhost:3000/i/" + img.slug, "_blank");
+              window.open("http://localhost:3000/" + img.slug, "_blank");
             }}
           >
             <svg className="w-5 h-5" strokeWidth={0.2} viewBox="0 0 24 24">
-              <path fill="currentColor" stroke="currentColor" d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7h2v7q0 .825-.587 1.413Q19.825 21 19 21Zm4.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z" />
+              <path
+                fill="currentColor"
+                stroke="currentColor"
+                d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7h2v7q0 .825-.587 1.413Q19.825 21 19 21Zm4.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z"
+              />
+            </svg>
+          </button>
+
+          {/* Delete button */}
+          <button
+            className="inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:hover:bg-rose-400/30 dark:bg-rose-400/20 mt-3 ml-1"
+            onClick={async () => {
+              const res = await fetch(`/api/deleteImage?slug=${img.slug}`);
+              if (res.status === 200) {
+                setUps(ups + 1);
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+              />
             </svg>
           </button>
         </div>
@@ -77,7 +126,8 @@ function ImgView({ img }: { img: ImageType }) {
           <div className="text-center text-gray-900 dark:text-white">
             <div className="font-medium">{img.slug}</div>
             <div className="text-gray-400">
-              Uploaded at <span className="font-medium">{dateToText(img.uploaded_at)}</span>
+              Uploaded at{" "}
+              <span className="font-medium">{dateToText(img.uploaded_at)}</span>
             </div>
           </div>
         </div>

@@ -5,12 +5,13 @@ import { REST as Discord } from "discord.js";
 import { env } from "../../env/server.mjs";
 import { unstable_getServerSession as getServerSession } from "next-auth";
 import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
-import { createImage } from "../../lib/redis";
+import { checkIfSlugExists, createImage } from "../../lib/redis";
 
 interface Request extends NextApiRequest {
   query: {
     name: string;
     type: string;
+    slug?: string;
   };
 }
 
@@ -81,10 +82,22 @@ export default async function handler(
     const randomlyGenerated3characterString = Math.random()
       .toString(36)
       .substring(2, 5);
-    const slug = `${session.user.name.slice(
-      0,
-      3
-    )}-${randomlyGenerated3characterString}.${type}`;
+    const slug =
+      req.query.slug ||
+      `${session.user.name.slice(
+        0,
+        3
+      )}-${randomlyGenerated3characterString}.${type}`;
+
+    const exists = await checkIfSlugExists(slug);
+
+    if (exists) {
+      return res.status(400).json({
+        success: Status.Error,
+        error: "Slug already exists",
+      });
+    }
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     resp["id"] = await createImage({
