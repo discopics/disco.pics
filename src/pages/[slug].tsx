@@ -121,8 +121,8 @@ function ImageRoute({
             Download image {image.slug}
           </a>
 
-          <a className="text-slate-300" href="">
-            BornFire - Image hosting
+          <a className="text-slate-300" href="https://disco.pics">
+            Disco.pics - Image hosting
           </a>
         </div>
       </div>
