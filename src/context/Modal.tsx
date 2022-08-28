@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Modal {
     id: string;
@@ -27,7 +27,6 @@ const ModalContext = React.createContext<Props>({
 
 export const ModalProvider = ({ children, modals }: { children: React.ReactNode, modals: Modal[] }) => {
 
-
     const [openedModal, setOpenedModal] = React.useState<OpenedModal | null>(null);
 
     function open(id: string, props?: unknown) {
@@ -41,6 +40,14 @@ export const ModalProvider = ({ children, modals }: { children: React.ReactNode,
     function close() {
         setOpenedModal(null);
     }
+
+    useEffect(() => {
+        if (openedModal) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [openedModal])
 
     return (
         <ModalContext.Provider
