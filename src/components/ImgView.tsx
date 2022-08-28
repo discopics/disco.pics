@@ -33,7 +33,7 @@ function ImgView({
               navigator.clipboard.writeText(
                 (process.env.NODE_ENV === "development"
                   ? "http://localhost:3000/"
-                  : process.env.VERCEL_URL) + img.slug
+                  : "https://disco.pics/") + img.slug
               );
               setIsCopied(true);
 
@@ -78,7 +78,7 @@ function ImgView({
               window.open(
                 (process.env.NODE_ENV === "development"
                   ? "http://localhost:3000/"
-                  : process.env.VERCEL_URL) + img.slug,
+                  : "https://disco.pics/") + img.slug,
                 "_blank"
               );
             }}
