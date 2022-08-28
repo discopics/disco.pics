@@ -1,6 +1,8 @@
-![OGIMG](https://disco.pics/og-image.png)
+# Disco.pics
 
-## Screenshots 
+Fast image hosting made easy.
+
+![OGIMG](https://disco.pics/og-image.png)
 
 ![Main page](https://cdn.discordapp.com/attachments/1010857352645316658/1013573935088029809/image_2022-08-29_035052362.png)
 
@@ -9,7 +11,7 @@
 
 ## How it works
 
-### Data storage
+### How the data is stored
 
 There are two different schemas, the `User` and `Image` schema.
 
@@ -42,7 +44,7 @@ Whenever someone visits the `/[slug]` route, the `Image` schema is queried for t
 Then, using the `uploaded_by`, embed information is queried from the `User` schema.
 
 
-### Retrieving data
+### How the data is accessed
 
 All data is retrieved using `redis-om` package. The frontend makes requests through the `/api` routes. Then, the backend accesses functions from `lib/redis.ts` to add/retrieve the data.
 
@@ -82,6 +84,10 @@ DISCORD_IMAGES_CHANNEL_ID
 # Redis credentials
 REDIS_URL
 ```
+
+### Deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/discopics/disco.pics)
 
 ## LICENSE
 
