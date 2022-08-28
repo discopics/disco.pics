@@ -72,7 +72,7 @@ export function ModalManager() {
                             <h1 className="ml-2 font-bold text-xl">
                                 {openedModal.title}
                             </h1>
-                            <button className="ml-auto hover:bg-black/20 p-1 rounded" onClick={close}>
+                            <button className="ml-auto hover:bg-white/10 p-1 rounded" onClick={close}>
                                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                                     <path fill="white" d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6Z" />
                                 </svg>

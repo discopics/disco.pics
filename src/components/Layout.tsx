@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Topbar from "./Topbar";
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,8 +9,9 @@ function Layout({ children }: { children: React.ReactNode }) {
         <Navbar />
       </div>
 
-      <div className="w-full bg-slate-800">
+      <div className="w-full bg-dark">
         {/* main */}
+        <Topbar />
         {children}
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { ImageType } from "../types/Types";
 
@@ -13,12 +14,12 @@ function ImgView({ img }: { img: ImageType }) {
   const [isCopied, setIsCopied] = useState(false);
 
   return (
-    <div className="rounded-xl bg-dark flex flex-col items-center justify-center">
-      <div className="w-full">
-        <div className="absolute flex justify-end z-0">
+    <div className="rounded-lg bg-dark-light border-2 border-dark-light flex flex-col items-center justify-center">
+      <div className="w-full relative">
+        <div className="absolute flex right-2 justify-end z-0">
           {/* Copy to clipboard button */}
           <button
-            className={`${ isCopied ? "bg-green-400" : "hover:bg-blue-400" } inline-flex justify-center items-center w-9 h-9 rounded-lg bg-slate-300/50 m-3 mr-1`}
+            className={`${ isCopied ? "bg-rose-400/40" : "dark:hover:bg-rose-400/30" } inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:bg-rose-400/20 m-3 mr-1`}
             onClick={() => {
               navigator.clipboard.writeText("http://localhost:3000/i/" + img.slug);
               setIsCopied(true);
@@ -52,7 +53,7 @@ function ImgView({ img }: { img: ImageType }) {
 
           {/* Link button */}
           <button
-            className="inline-flex justify-center items-center w-9 h-9 rounded-lg hover:bg-blue-400 bg-slate-300/50 mt-3 ml-1"
+            className="inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:hover:bg-rose-400/30 dark:bg-rose-400/20 mt-3 ml-1"
             onClick={() => {
               window.open("http://localhost:3000/i/" + img.slug, "_blank");
             }}
@@ -65,7 +66,7 @@ function ImgView({ img }: { img: ImageType }) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="w-full rounded-t-xl"
+          className="w-full rounded-t-md"
           src={
             img.img_url.replace("cdn.discordapp.com", "media.discordapp.net") +
             "?width=300&height=300"
