@@ -34,8 +34,7 @@ export default function Topbar() {
     };
 
     return (
-        <header className="sticky top-0 h-14 z-50 flex items-center justify-between px-5 bg-light dark:bg-dark-light w-full dark:text-white">
-            🔥 BornFire
+        <header className="sticky top-0 h-14 z-50 flex items-center justify-end px-5 bg-light dark:bg-dark-light w-full dark:text-white">
             <div className="hidden md:block">
                 {!session ? (
                     <button

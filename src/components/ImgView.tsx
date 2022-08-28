@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { ImageType } from "../types/Types";
 
@@ -78,7 +77,7 @@ function ImgView({ img }: { img: ImageType }) {
           <div className="text-center text-gray-900 dark:text-white">
             <div className="font-medium">{img.slug}</div>
             <div className="text-gray-400">
-              Uploaded at {dateToText(img.uploaded_at)}
+              Uploaded at <span className="font-medium">{dateToText(img.uploaded_at)}</span>
             </div>
           </div>
         </div>
