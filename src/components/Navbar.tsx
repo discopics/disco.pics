@@ -1,46 +1,81 @@
-import { signIn, useSession } from 'next-auth/react';
-import Link from 'next/link';
-import React from 'react'
+import { motion } from "framer-motion";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 
-const Item: React.FC<{
-    children: React.ReactNode;
-    href: string;
-    newTab?: boolean;
-}> = ({ children, href, newTab }) => {
-    return (
-        <>
-            <Link href={href} className="bg-white" target={newTab ? "_blank" : "_self"}>
-                {children}
-            </Link>
-        </>
-    )
+const Divider = ({ className, text }: { className?: string; text?: string; [key: string]: any }) => (
+  <>
+    <h1 className={`${className} h-0 dividers text-transparent text-sm -mb-1`}>
+      {text}
+    </h1>
+    <div className={`w-full rounded-md bg-dark/70 h-[2px]`} />
+  </>
+)
+
+const NavItem = ({ onClick, icon, text }: {
+  onClick: () => void;
+  text: string;
+  icon: React.ReactNode;
+}) => {
+  return (
+    <button onClick={onClick} className="-mb-1 nav-item w-full justify-center items-center hover:text-rose-500 text-rose-400 transition nav-item rounded-md h-10 pb-1 flex hover:bg-rose-400/10">
+      {icon}
+      <h1 className="-mb-1 hidden">{text}</h1>
+    </button>
+  )
 }
 
-const Navbar: React.FC = () => {
+function Navbar() {
 
-    const { data: session } = useSession();
+  const { data: session } = useSession();
+  const router = useRouter();
 
-    return (
-        <div className="h-screen py-4 pl-4 flex flex-col justify-between items-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-                src={session?.user?.image ?? ""}
-                alt="icon"
-                width={50}
-                className="rounded-full"
-            />
-            <div className="flex text-white sidebar -ml-8">
-                <Item
-                    href="/"
-                >
-                    <svg width="1em" color='white' height="1em" viewBox="0 0 24 24"><path fill="white" d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-10.6-3.47l1.63 2.18l2.58-3.22a.5.5 0 0 1 .78 0l2.96 3.7c.26.33.03.81-.39.81H9a.5.5 0 0 1-.4-.8l2-2.67c.2-.26.6-.26.8 0zM2 7v13c0 1.1.9 2 2 2h13c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1-.45-1-1V7c0-.55-.45-1-1-1s-1 .45-1 1z"></path></svg>
-                </Item>
-            </div>
-            <button onClick={() => signIn("discord")} className='my-2 bg-black/10 p-2 rounded-full'>
-                <svg width="2em" height="2em" viewBox="0 0 36 36"><path fill="currentColor" d="M18.1 11c-3.9 0-7 3.1-7 7s3.1 7 7 7s7-3.1 7-7s-3.1-7-7-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5s5 2.2 5 5s-2.2 5-5 5z" className="clr-i-outline clr-i-outline-path-1"></path><path fill="currentColor" d="m32.8 14.7l-2.8-.9l-.6-1.5l1.4-2.6c.3-.6.2-1.4-.3-1.9l-2.4-2.4c-.5-.5-1.3-.6-1.9-.3l-2.6 1.4l-1.5-.6l-.9-2.8C21 2.5 20.4 2 19.7 2h-3.4c-.7 0-1.3.5-1.4 1.2L14 6c-.6.1-1.1.3-1.6.6L9.8 5.2c-.6-.3-1.4-.2-1.9.3L5.5 7.9c-.5.5-.6 1.3-.3 1.9l1.3 2.5c-.2.5-.4 1.1-.6 1.6l-2.8.9c-.6.2-1.1.8-1.1 1.5v3.4c0 .7.5 1.3 1.2 1.5l2.8.9l.6 1.5l-1.4 2.6c-.3.6-.2 1.4.3 1.9l2.4 2.4c.5.5 1.3.6 1.9.3l2.6-1.4l1.5.6l.9 2.9c.2.6.8 1.1 1.5 1.1h3.4c.7 0 1.3-.5 1.5-1.1l.9-2.9l1.5-.6l2.6 1.4c.6.3 1.4.2 1.9-.3l2.4-2.4c.5-.5.6-1.3.3-1.9l-1.4-2.6l.6-1.5l2.9-.9c.6-.2 1.1-.8 1.1-1.5v-3.4c0-.7-.5-1.4-1.2-1.6zm-.8 4.7l-3.6 1.1l-.1.5l-.9 2.1l-.3.5l1.8 3.3l-2 2l-3.3-1.8l-.5.3c-.7.4-1.4.7-2.1.9l-.5.1l-1.1 3.6h-2.8l-1.1-3.6l-.5-.1l-2.1-.9l-.5-.3l-3.3 1.8l-2-2l1.8-3.3l-.3-.5c-.4-.7-.7-1.4-.9-2.1l-.1-.5L4 19.4v-2.8l3.4-1l.2-.5c.2-.8.5-1.5.9-2.2l.3-.5l-1.7-3.3l2-2l3.2 1.8l.5-.3c.7-.4 1.4-.7 2.2-.9l.5-.2L16.6 4h2.8l1.1 3.5l.5.2c.7.2 1.4.5 2.1.9l.5.3l3.3-1.8l2 2l-1.8 3.3l.3.5c.4.7.7 1.4.9 2.1l.1.5l3.6 1.1v2.8z" className="clr-i-outline clr-i-outline-path-2"></path><path fill="none" d="M0 0h36v36H0z"></path></svg>
-            </button>
-        </div>
-    )
+  return (
+    <aside className="w-fit navbar sticky top-0 hidden md:block">
+      <motion.div initial={{ width: "4rem" }} whileHover={{ width: 200 }} transition={{ type: "tween", duration: 0.1 }} className="
+        [&:hover>.dividers]:text-light-dark/50
+        [&:hover>.dividers]:h-max
+        [&:hover>.nav-item>h1]:inline
+        [&:hover>.nav-item]:gap-2 
+        [&:hover>.nav-item]:px-3
+        [&:hover>.nav-item]:justify-start
+        [&:hover>.logo>h1]:inline
+        [&:hover>.profile>.details]:flex
+        [&:hover>.profile]:p-2
+        [&:hover>.profile]:bg-rose-400/10
+        overflow-y-auto gap-2 overflow-hidden flex flex-col items-start justify-start min-h-screen py-4 px-3 bg-light dark:bg-dark-light
+      ">
+        <button onClick={() => router.push("/")} className="w-fit logo flex items-center hover:text-rose-500 text-white gap-2 justify-center h-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt="logo" className="h-10 w-10" src="https://yt3.ggpht.com/ytc/AMLnZu80d66aj0mK3KEyMfpdGFyrVWdV5tfezE17IwRkhw=s88-c-k-c0x00ffffff-no-rj" />
+          <h1 className="hidden font-bold text-xl">disco.pics</h1>
+        </button>
+        <Divider text="Customization" className="mt-auto" />
+        <NavItem
+          onClick={() => null}
+          icon={(
+            <svg className=" w-5 h-5" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M5 23.7q-.825 0-1.413-.588Q3 22.525 3 21.7v-14q0-.825.587-1.413Q4.175 5.7 5 5.7h8.925l-2 2H5v14h14v-6.95l2-2v8.95q0 .825-.587 1.412q-.588.588-1.413.588Zm7-9Zm4.175-8.425l1.425 1.4l-6.6 6.6V15.7h1.4l6.625-6.625l1.425 1.4l-7.2 7.225H9v-4.25Zm4.275 4.2l-4.275-4.2l2.5-2.5q.6-.6 1.438-.6q.837 0 1.412.6l1.4 1.425q.575.575.575 1.4T22.925 8Z"
+              ></path>
+            </svg>
+          )}
+          text="Embed Builder"
+        />
+        <Divider />
+        <button className="flex gap-2 w-full rounded-md profile">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={session?.user?.image ?? ""} className="rounded-full w-9 h-9" alt="avatar" />
+          <div className="hidden details flex-col gap-0">
+            {" "}<h1 className="text-rose-300 text-md">{session?.user.name}</h1>
+            <h1 className="text-xs -mt-1 text-rose-300">#{session?.user.discriminator}</h1>
+          </div>
+        </button>
+      </motion.div>
+    </aside>
+  )
 }
 
 export default Navbar;
