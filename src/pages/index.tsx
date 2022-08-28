@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           <>
             {user ? (
               <>
-                <div className="p-4">
+                <div className="p-4 min-h-screen">
                   <div className="mb-4">
                     <span className="text-white text-lg">Hello,</span>{" "}
                     <span className="text-xl text-white font-bold">

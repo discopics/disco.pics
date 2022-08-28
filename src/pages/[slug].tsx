@@ -59,10 +59,17 @@ export async function getServerSideProps(context: NextPageContext) {
 
   const getImage = async () => {
     const imgUrl = await fetch(`${url}/api/getImage?slug=${slug}`);
-    const img = await imgUrl.json();
-    return img;
+    if (imgUrl.status === 200) {
+      return imgUrl.json();
+    }
+    return null;
   };
   const image = await getImage();
+
+  if (!image) {
+    // Redirect to 404
+    context.res?.writeHead(302, { Location: "/404" });
+  }
 
   return {
     props: {
