@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -68,11 +68,7 @@ function Navbar() {
           className="w-fit logo flex items-center hover:text-rose-500 text-white gap-2 justify-center h-10"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt="logo"
-            className="h-10 w-10"
-            src="/logo.png"
-          />
+          <img alt="logo" className="h-10 w-10" src="/logo.png" />
           <h1 className="hidden font-bold text-xl">disco.pics</h1>
         </button>
         <Divider text="Customization" className="mt-auto" />
@@ -89,6 +85,26 @@ function Navbar() {
           text="Embed Builder"
         />
         <Divider />
+        <NavItem
+          onClick={() => signOut()}
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+          }
+          text="Sign out"
+        />
         <button className="flex gap-2 w-full rounded-md profile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

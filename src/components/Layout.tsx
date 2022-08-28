@@ -1,18 +1,22 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Topbar from "./Topbar";
+import { useSession } from "next-auth/react";
 
 function Layout({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession();
 
   return (
     <div className="flex dark">
-      <div>
-        <Navbar />
-      </div>
+      {session && (
+        <div>
+          <Navbar />
+        </div>
+      )}
 
-      <div className="w-full bg-dark">
+      <div className="w-full bg-dark min-h-screen">
         {/* main */}
-        <Topbar/>
+        <Topbar />
         <div>{children}</div>
       </div>
     </div>
