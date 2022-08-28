@@ -47,6 +47,12 @@ const MyApp: AppType = ({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#9f00a7" />
         <meta name="theme-color" content="#ffffff"></meta>
+        <script
+          async
+          defer
+          data-website-id="545e248d-8622-482d-bd52-084a6bfb0897"
+          src="https://umami.dhravya.dev/umami.js"
+        ></script>
       </Head>
       <SessionProvider session={session}>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
