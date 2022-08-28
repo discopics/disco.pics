@@ -42,20 +42,20 @@ function ImageRoute({
         />
         <meta
           property="og:title"
-          content={embed_title || "Disco.pics"}
+          content={embed_title || ""}
           key="og:title"
         />
 
         {/* Site name */}
         <meta
           property="og:site_name"
-          content={embed_site_name || "Disco.Pics"}
+          content={embed_site_name || ""}
           key="og:site_name"
         />
 
         <meta
           property="og:url"
-          content={embed_site_url || "https://disco.pics"}
+          content={embed_site_url || ""}
           key="og:url"
         />
         {/* Colour */}
