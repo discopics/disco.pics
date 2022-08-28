@@ -12,9 +12,9 @@ function Embed() {
   const [desc, setDesc] = useState("");
   return (
     <Layout>
-        <Head>
-            <title>Embed Builder | Disco.pics</title>
-        </Head>
+      <Head>
+        <title>Embed Builder | Disco.pics</title>
+      </Head>
       <div>
         <h1 className="text-white text-2xl m-4">Embed Builder</h1>
 
