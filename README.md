@@ -2,11 +2,17 @@
 
 Fast image hosting made easy.
 
-![OGIMG](https://disco.pics/og-image.png)
-
 ![Main page](https://cdn.discordapp.com/attachments/1010857352645316658/1013573935088029809/image_2022-08-29_035052362.png)
 
 ![Embed builder](https://cdn.discordapp.com/attachments/1010857352645316658/1013568634314047628/1u118.gif)
+
+# Overview video
+
+Here's a short video that explains the project and how it uses Redis:
+
+[Insert your own video here, and remove the one below]
+
+[![Disco.pics](https://disco.pics/og-image.png)](https://www.youtube.com/watch?v=iprpEQD6liM)
 
 
 ## How it works
