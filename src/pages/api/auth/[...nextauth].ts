@@ -4,7 +4,6 @@ import { env } from "../../../env/server.mjs";
 import { cloneDeep } from "tailwindcss/lib/util/cloneDeep";
 
 export const authOptions: NextAuthOptions = {
-  // TODO: Include user.id on session
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,

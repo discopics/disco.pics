@@ -4,6 +4,7 @@ import ImgView from "../components/ImgView";
 import Layout from "../components/Layout";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import useRedisUser from "../hooks/useRedisUser";
+import Head from "next/head";
 
 const Home: NextPage = () => {
 
