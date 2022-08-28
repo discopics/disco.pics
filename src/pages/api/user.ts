@@ -56,6 +56,7 @@ export default async function handler(
       data: { user: user, images: images },
     });
   } catch (err) {
+    console.error(err)
     return res.status(500).json({
       success: Status.Error,
       error: err,
