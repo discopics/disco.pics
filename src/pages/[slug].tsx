@@ -98,12 +98,10 @@ function ImageRoute({
           <>
             <div className="h-96 relative flex flex-col">
               <Image
-                src={
-                  image.img_url.replace(
-                    "cdn.discordapp.com",
-                    "media.discordapp.net"
-                  ) + "?width=350&height=350"
-                }
+                src={image.img_url.replace(
+                  "cdn.discordapp.com",
+                  "media.discordapp.net"
+                )}
                 alt={image.slug}
                 layout="fill"
                 objectFit="contain"
@@ -138,7 +136,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const url =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://bornfire.pics";
+      : process.env.VERCEL_URL;
 
   const getImage = async () => {
     const imgUrl = await fetch(`${url}/api/getImage?slug=${slug}`);

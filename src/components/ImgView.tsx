@@ -31,7 +31,9 @@ function ImgView({
             } inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:bg-rose-400/20 m-3 mr-1`}
             onClick={() => {
               navigator.clipboard.writeText(
-                "http://localhost:3000/" + img.slug
+                (process.env.NODE_ENV === "development"
+                  ? "http://localhost:3000/"
+                  : process.env.VERCEL_URL) + img.slug
               );
               setIsCopied(true);
 
@@ -73,7 +75,12 @@ function ImgView({
           <button
             className="inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:hover:bg-rose-400/30 dark:bg-rose-400/20 mt-3 ml-1"
             onClick={() => {
-              window.open("http://localhost:3000/" + img.slug, "_blank");
+              window.open(
+                (process.env.NODE_ENV === "development"
+                  ? "http://localhost:3000/"
+                  : process.env.VERCEL_URL) + img.slug,
+                "_blank"
+              );
             }}
           >
             <svg className="w-5 h-5" strokeWidth={0.2} viewBox="0 0 24 24">
