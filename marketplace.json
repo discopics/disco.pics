@@ -1,0 +1,38 @@
+{
+    "app_name": "Disco.pics",
+    "description": "Blazingly fast powerful image hosting, powered by discord.",
+    "hidden": "false",
+    "rank": "21",
+    "type": "Full App",
+    "contributed_by": "Community",
+    "repo_url": "https://github.com/discopics/disco.pics",
+    "download_url": "https://github.com/discopics/disco.pics/archive/refs/heads/main.zip",
+    "hosted_url": "https://disco.pics",
+    "quick_deploy": "True",
+    "deploy_buttons": [
+        "vercel"
+    ],
+    "language": [
+        "Typescript"
+    ],
+    "redis_commands": [],
+    "redis_features": [
+        "storage"
+    ],
+    "redis_modules": [
+        "RedisJSON",
+        "RedisSearch"
+    ],
+    "app_image_urls": [
+        "https://cdn.discordapp.com/attachments/1010857352645316658/1013573935088029809/image_2022-08-29_035052362.png",
+        "https://disco.pics/og-image.png"
+    ],
+    "youtube_url": "",
+    "special_tags": [
+        "Hackathon"
+    ],
+    "verticals": [
+        "Technology"
+    ],
+    "markdown": "https://raw.githubusercontent.com/discopics/disco.pics/main/README.md"
+}
