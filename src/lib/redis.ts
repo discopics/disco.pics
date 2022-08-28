@@ -16,7 +16,7 @@ async function connect() {
 class Image extends Entity {}
 const schema = new Schema(Image, {
   uploaded_by: { type: "string", indexed: true },
-  slug: { type: "text", indexed: true },
+  slug: { type: "string", indexed: true },
   img_url: { type: "string" },
   uploaded_at: { type: "date" },
 });
@@ -50,17 +50,6 @@ export async function createIndex() {
   const userRepository = client.fetchRepository(userSchema);
   userRepository.createIndex();
   console.log("Index created");
-}
-
-export async function searchRedis(q: string) {
-  await connect();
-  const imageRepository = client.fetchRepository(schema);
-  const images = await imageRepository
-    .search()
-    .where("slug")
-    .matches(q)
-    .return.all();
-  return images;
 }
 
 export async function checkIfSlugExists(slug: string) {

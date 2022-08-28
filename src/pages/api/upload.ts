@@ -114,6 +114,7 @@ export default async function handler(
       data: resp,
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       success: Status.Error,
       error: err,

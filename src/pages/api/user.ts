@@ -41,22 +41,20 @@ export default async function handler(
         token_number: 0,
       });
     }
+    const images = await getAllImagesByUser(session.user.id);
 
     if (req.query.images == false) {
       return res.status(200).json({
         success: Status.Success,
         data: { user: user },
       });
+    } else {
+      return res.status(200).json({
+        success: Status.Success,
+        data: { user: user, images: images },
+      });
     }
-
-    const images = await getAllImagesByUser(session.user.id);
-
-    return res.status(200).json({
-      success: Status.Success,
-      data: { user: user, images: images },
-    });
   } catch (err) {
-    console.error(err)
     return res.status(500).json({
       success: Status.Error,
       error: err,
