@@ -66,7 +66,7 @@ export function ModalManager() {
     return (
         <AnimatePresence>
             {openedModal && (
-                <div className="absolute flex justify-center items-center w-screen h-screen bg-black/20 z-[100]">
+                <div className="fixed flex justify-center items-center w-screen h-screen bg-black/20 z-[100]">
                     <motion.div initial={{ scaleY: 0 }} exit={{ scaleY: 0, opacity: 0 }} animate={{ scaleY: 1 }} className="min-h-[70vh] min-w-[70vw] p-5 rounded-md text-white bg-gray-600">
                         <div className="w-full flex">
                             <h1 className="ml-2 font-bold text-xl">
