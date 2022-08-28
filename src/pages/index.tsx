@@ -15,7 +15,7 @@ const Home: NextPage = () => {
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const [ups, setUps] = useState<number>(0);
-  const { open, openedModals, close } = useModals();
+  const { open, openedModal, close } = useModals();
 
   useEffect(() => {
 
@@ -26,10 +26,6 @@ const Home: NextPage = () => {
       setUser(user.data);
     })();
   }, [ups]);
-
-  useEffect(() => {
-    console.log(openedModals);
-  }, [openedModals]);
 
   const uploadImg = async () => {
     const reader = new FileReader();
@@ -85,10 +81,9 @@ const Home: NextPage = () => {
             </button>
           ) : (
             <div className="flex gap-4">
-              <button onClick={() => close("test")}>close</button>
               <button
                 onClick={() => {
-                  open("test");
+                  open("test")
                   return
                   setUploadLoading(true);
                   // Take file input
@@ -107,7 +102,7 @@ const Home: NextPage = () => {
                   fileInput.click();
                   uploadImg();
                 }}
-                className="flex items-center p-2 text-base  font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex items-center py-2 px-4 gap-1 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600/20"
               >
                 {uploadLoading ? "Uploading..." : "Upload"}
                 <svg
@@ -116,7 +111,7 @@ const Home: NextPage = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="w-5 h-5"
                 >
                   <path
                     strokeLinecap="round"

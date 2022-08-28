@@ -18,9 +18,7 @@ function ImgView({ img }: { img: ImageType }) {
         <div className="absolute flex justify-end z-0">
           {/* Copy to clipboard button */}
           <button
-            className={`inline-flex gap-1 p-2 rounded-lg hover:bg-blue-400 bg-slate-300/50 m-3 ${
-              isCopied && "bg-green-400"
-            }`}
+            className={`${ isCopied ? "bg-green-400" : "hover:bg-blue-400" } inline-flex justify-center items-center w-9 h-9 rounded-lg bg-slate-300/50 m-3 mr-1`}
             onClick={() => {
               navigator.clipboard.writeText("http://localhost:3000/i/" + img.slug);
               setIsCopied(true);
@@ -31,28 +29,17 @@ function ImgView({ img }: { img: ImageType }) {
             }}
           >
             {!isCopied ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
-                />
+              <svg className="w-5 h-5 scale-90" viewBox="0 0 16 16">
+                <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.25 4.25v-2.5h-9.5v9.5h2.5m.5-6.5v9.5h9.5v-9.5z" />
               </svg>
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                strokeWidth={2.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-5 h-5"
               >
                 <path
                   strokeLinecap="round"
@@ -65,24 +52,13 @@ function ImgView({ img }: { img: ImageType }) {
 
           {/* Link button */}
           <button
-            className="inline-flex gap-1 p-2 rounded-lg hover:bg-blue-400 bg-slate-300/50 m-3"
+            className="inline-flex justify-center items-center w-9 h-9 rounded-lg hover:bg-blue-400 bg-slate-300/50 mt-3 ml-1"
             onClick={() => {
               window.open("http://localhost:3000/i/" + img.slug, "_blank");
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-              />
+            <svg className="w-5 h-5" strokeWidth={0.2} viewBox="0 0 24 24">
+              <path fill="currentColor" stroke="currentColor" d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7h2v7q0 .825-.587 1.413Q19.825 21 19 21Zm4.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z" />
             </svg>
           </button>
         </div>
