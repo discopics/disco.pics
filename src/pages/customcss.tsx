@@ -4,6 +4,14 @@ import { toast } from "../lib/toast";
 
 function CustomCSS() {
   const [customCSS, setCustomCSS] = useState("");
+
+  const minifyCSS = (css: string) => {
+    return css
+      .replace(/\s+/g, " ")
+      .replace(/\s*([{}])\s*/g, "$1")
+      .replace(/;}/g, "}");
+  };
+
   return (
     <div>
       <Layout page="Custom CSS">
@@ -14,7 +22,9 @@ function CustomCSS() {
             <button
               className="px-3 py-2 border-2 rounded-md border-rose-400/20 hover:bg-rose-400/30 text-white cursor-pointer"
               onClick={async () => {
-                const res = await fetch("/api/updateCss?css=" + customCSS);
+                // Minify the CSS
+                const minifiedCSS = await minifyCSS(customCSS);
+                const res = await fetch("/api/updateCss?css=" + minifiedCSS);
                 if (res.status == 200) {
                   toast("CSS settings updated", "success");
                 } else {
