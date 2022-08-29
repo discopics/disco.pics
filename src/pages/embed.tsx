@@ -120,7 +120,7 @@ function Embed() {
               className="w-full p-2 bg-rose-500 hover:bg-rose-500/70 text-white rounded-md"
               onClick={async () => {
                 const res = await fetch(
-                  `/api/updateEmbedSettings?embed_title=${title}&embed_site_name=${siteName}&embed_site_url=${siteUrl}&embed_color=${color}&embed_author_name=${authorName}&embed_desc=${desc}`
+                  `/api/updateEmbedSettings?embed_title=${title}&embed_site_name=${siteName}&embed_site_url=${siteUrl}&embed_colour=${color}&embed_author_name=${authorName}&embed_desc=${desc}`
                 );
                 if (res.status == 200) {
                   alert("Embed settings updated");
