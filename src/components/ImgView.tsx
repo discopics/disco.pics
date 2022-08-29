@@ -31,9 +31,11 @@ function ImgView({
             } inline-flex justify-center items-center w-9 h-9 rounded-lg dark:text-rose-500 dark:bg-rose-400/20 m-3 mr-1`}
             onClick={() => {
               navigator.clipboard.writeText(
-                (process.env.NODE_ENV === "development"
-                  ? "http://localhost:3000/"
-                  : "https://disco.pics/") + img.slug
+                encodeURI(
+                  (process.env.NODE_ENV === "development"
+                    ? "http://localhost:3000/"
+                    : process.env.NEXT_PUBLIC_VERCEL_URL) + img.slug
+                )
               );
               setIsCopied(true);
 
@@ -78,7 +80,7 @@ function ImgView({
               window.open(
                 (process.env.NODE_ENV === "development"
                   ? "http://localhost:3000/"
-                  : "https://disco.pics/") + img.slug,
+                  : process.env.NEXT_PUBLIC_VERCEL_URL) + img.slug,
                 "_blank"
               );
             }}

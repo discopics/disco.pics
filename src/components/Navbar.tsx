@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -73,6 +73,26 @@ function Navbar() {
         </button>
         <Divider text="Customization" className="mt-auto" />
         <NavItem
+          onClick={() => router.push("/customcss")}
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+          }
+          text="Custom CSS (soon)"
+        />
+        <NavItem
           onClick={() => router.push("/embed")}
           icon={
             <svg className=" w-5 h-5" viewBox="0 0 24 24">
@@ -99,8 +119,16 @@ function Navbar() {
               #{session?.user.discriminator}
             </h1>
           </div>
-          <button className="ml-auto text-rose-500 hover:bg-rose-400/50 hover:text-rose-300 px-2 rounded-md hidden logout-btn">
-            <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h7v2Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5Z"></path></svg>
+          <button
+            onClick={() => signOut()}
+            className="ml-auto text-rose-500 hover:bg-rose-400/50 hover:text-rose-300 px-2 rounded-md hidden logout-btn"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h7v2Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5Z"
+              ></path>
+            </svg>
           </button>
         </div>
       </motion.div>

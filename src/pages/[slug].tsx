@@ -153,11 +153,13 @@ export async function getServerSideProps(context: NextPageContext) {
   };
   const image = await getImage();
 
-  if (!image) {
+  if (image === null) {
     // Redirect to 404
     context.res?.writeHead(302, { Location: "/404" });
-  }
+    context.res?.end();
 
+    return { props: { image: null } };
+  }
   const user = await getUser(image.uploaded_by);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userJSON: any = user?.toJSON();
