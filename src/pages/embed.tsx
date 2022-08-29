@@ -1,15 +1,50 @@
 import Head from "next/head";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import useRedisUser from "../hooks/useRedisUser";
 
 function Embed() {
   const [title, setTitle] = useState("");
   const [siteName, setSiteName] = useState("");
-  const [siteUrl, setSiteUrl] = useState("disco.pics");
-  const [color, setColor] = useState("");
+  const [siteUrl, setSiteUrl] = useState("");
+  const [color, setColor] = useState("#000000");
   const [authorName, setAuthorName] = useState("");
   const [desc, setDesc] = useState("");
+
+  const { user } = useRedisUser();
+
+  useEffect(() => {
+    if (user?.user) {
+      setTitle(
+        user?.user.embed_title != "undefined" ? user?.user.embed_title : ""
+      );
+      setSiteName(
+        user?.user.embed_site_name != "undefined"
+          ? user?.user.embed_site_name
+          : ""
+      );
+      setSiteUrl(
+        user?.user.embed_site_url != "undefined"
+          ? user?.user.embed_site_url
+          : ""
+      );
+      setColor(
+        user?.user.embed_colour != "undefined"
+          ? user?.user.embed_colour
+          : "#000000"
+      );
+      setAuthorName(
+        user?.user.embed_author_name != "undefined"
+          ? user?.user.embed_author_name
+          : ""
+      );
+      setDesc(
+        user?.user.embed_desc != "undefined" ? user?.user.embed_desc : ""
+      );
+    }
+  }, [user?.user]);
+
   return (
     <Layout>
       <Head>
