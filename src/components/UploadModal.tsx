@@ -48,7 +48,7 @@ function UploadModal({ input }: { input: File }) {
     <div>
       {/* Image preview in small box */}
       <div className="flex flex-col items-center justify-center overflow-y-auto">
-        <div className="md:absolute md:top-12 max-h-80 bg-dark rounded-md flex flex-col items-center p-3">
+        <div className="md:absolute md:top-12 max-w-[400px] bg-dark rounded-md flex flex-col items-center p-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={URL.createObjectURL(input)}
@@ -78,12 +78,12 @@ function UploadModal({ input }: { input: File }) {
           </div>
 
           {/* Upload button */}
-          <div className="flex w-full items-center justify-center">
+          <div className="w-full flex justify-center items-center">
             <button
               onClick={async () => {
                 uploadImg(input, name);
               }}
-              className="px-4 text-sm py-2 text-rose-400 hover:text-rose-300 hover:bg-rose-400/50 bg-rose-400/30 rounded-md"
+              className="px-4 flex-grow w-fit font-bold text-sm py-2 text-rose-500 border-2 border-rose-500 hover:bg-rose-500 hover:text-white rounded-md"
             >
               Upload
             </button>
