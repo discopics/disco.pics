@@ -4,6 +4,8 @@ import { SessionProvider } from "next-auth/react";
 import { ModalManager, ModalProvider } from "../context/Modal";
 import UploadModal from "../components/UploadModal";
 import Head from "next/head";
+import MobileNavbar, { MobilNavProvider } from "../components/MobileNavbar";
+import { Toaster } from "react-hot-toast";
 
 const modals = [
   {
@@ -54,13 +56,17 @@ const MyApp: AppType = ({
           src="https://umami.dhravya.dev/umami.js"
         ></script>
       </Head>
+      <Toaster />
       <SessionProvider session={session}>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        <ModalProvider modals={modals}>
-          <ModalManager />
-          <Component {...pageProps} />
-        </ModalProvider>
+        <MobilNavProvider>
+          <MobileNavbar />
+          <ModalProvider modals={modals}>
+            <ModalManager />
+            <Component {...pageProps} />
+          </ModalProvider>
+        </MobilNavProvider>
       </SessionProvider>
     </>
   );
