@@ -93,7 +93,7 @@ function Embed() {
                   <input
                     className="w-full bg-dark-light text-white"
                     type="color"
-                    value={color}
+                    value={color || "#000000"}
                     onChange={(e) => setColor(e.target.value)}
                   />
                 </div>
