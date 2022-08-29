@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { toast } from "react-hot-toast";
 
 const Divider = ({
   className,
@@ -12,10 +13,12 @@ const Divider = ({
   [key: string]: unknown;
 }) => (
   <>
-    <h1 className={`${className} h-0 dividers text-transparent text-sm -mb-1`}>
+    <h1
+      className={`${className} h-0 dividers text-transparent text-sm -mb-1 mx-2`}
+    >
       {text}
     </h1>
-    <div className={`w-full rounded-md bg-dark/70 h-[2px]`} />
+    {/* <div className={`w-full rounded-md bg-dark/70 h-[2px]`} /> */}
   </>
 );
 
@@ -73,7 +76,7 @@ function Navbar() {
           <img alt="logo" className="h-10 w-10" src="/logo.png" />
           <h1 className="hidden font-bold text-xl">disco.pics</h1>
         </button>
-        <Divider text="Customization" className="mt-auto" />
+        <Divider text="Customization" className="mt-32" />
         <NavItem
           onClick={() => router.push("/customcss")}
           icon={
@@ -92,7 +95,7 @@ function Navbar() {
               />
             </svg>
           }
-          text="Custom CSS (soon)"
+          text="Custom CSS"
         />
         <NavItem
           onClick={() => router.push("/embed")}
@@ -106,7 +109,35 @@ function Navbar() {
           }
           text="Embed Builder"
         />
-        <Divider />
+
+        <Divider text="Integrations" />
+        <NavItem
+          onClick={() => toast("Coming soon!")}
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"
+              />
+            </svg>
+          }
+          text="API"
+        />
+        <NavItem
+          onClick={() => toast("Coming soon!")}
+          // eslint-disable-next-line @next/next/no-img-element
+          icon={<img alt="sharex icon" className="w-5 h-5" src="https://getsharex.com/img/ShareX_Logo.png" />}
+          text="App integrations"
+        />
+        <Divider className="mt-auto" />
         <div className="flex gap-2 w-full rounded-md profile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

@@ -6,7 +6,6 @@ const useRedisUser = () => {
   const [refetch, setRefetch] = useState(0);
   useEffect(() => {
     (async () => {
-      console.log("RUN");
       const response = await fetch("/api/user");
       const user = await response.json();
       setUser(user.data);
