@@ -32,7 +32,21 @@ function ImageRoute({
     <>
       <Head>
         {/* Image when sharing */}
-        <meta property="og:image" content={image.img_url} key="og:image" />
+        {image.img_url.endsWith(".mp4") ||
+        image.img_url.endsWith(".webm") ||
+        image.img_url.endsWith(".mov") ? (
+          <>
+            <meta property="og:type" content="video.other" />
+            <meta property="og:video:type" content="video/mp4" />
+            <meta property="og:video" content={image.img_url} />
+            <meta property="og:video:url" content={image.img_url} />
+            <meta property="og:video:secure_url" content={image.img_url} />
+            <meta property="og:video:width" content="1280" />
+            <meta property="og:video:height" content="720" />
+          </>
+        ) : (
+          <meta property="og:image" content={image.img_url} key="og:image" />
+        )}
 
         {/* Share embeds */}
         <meta
@@ -40,11 +54,7 @@ function ImageRoute({
           content={embed_desc || ""}
           key="og:description"
         />
-        <meta
-          property="og:title"
-          content={embed_title || ""}
-          key="og:title"
-        />
+        <meta property="og:title" content={embed_title || ""} key="og:title" />
 
         {/* Site name */}
         <meta
@@ -53,11 +63,7 @@ function ImageRoute({
           key="og:site_name"
         />
 
-        <meta
-          property="og:url"
-          content={embed_site_url || ""}
-          key="og:url"
-        />
+        <meta property="og:url" content={embed_site_url || ""} key="og:url" />
         {/* Colour */}
         <meta
           property="theme-color"

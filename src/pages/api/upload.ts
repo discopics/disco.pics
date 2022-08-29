@@ -15,7 +15,16 @@ interface Request extends NextApiRequest {
   };
 }
 
-const supportedTypes = ["png", "jpg", "jpeg", "gif", "webp", "mp4"];
+const supportedTypes = [
+  "png",
+  "jpg",
+  "jpeg",
+  "gif",
+  "webp",
+  "mp4",
+  "webm",
+  "mov",
+];
 
 export default async function handler(
   req: Request,
@@ -114,7 +123,7 @@ export default async function handler(
       data: resp,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(500).json({
       success: Status.Error,
       error: err,
