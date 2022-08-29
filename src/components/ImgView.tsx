@@ -34,7 +34,7 @@ function ImgView({
                 encodeURI(
                   (process.env.NODE_ENV === "development"
                     ? "http://localhost:3000/"
-                    : process.env.NEXT_PUBLIC_VERCEL_URL) + img.slug
+                    : "https://disco.pics/") + img.slug
                 )
               );
               setIsCopied(true);
@@ -80,7 +80,7 @@ function ImgView({
               window.open(
                 (process.env.NODE_ENV === "development"
                   ? "http://localhost:3000/"
-                  : process.env.NEXT_PUBLIC_VERCEL_URL) + img.slug,
+                  : "https://disco.pics/") + img.slug,
                 "_blank"
               );
             }}
