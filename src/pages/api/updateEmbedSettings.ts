@@ -46,6 +46,8 @@ export default async function handler(
       embed_desc,
     } = req.query;
 
+    console.log(embed_colour);
+
     const response = updateUserEmbedSettings(
       session.user.id,
       embed_title,

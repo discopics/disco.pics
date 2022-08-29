@@ -31,8 +31,8 @@ function Embed() {
       );
       setColor(
         user?.user.embed_colour != "undefined"
-          ? user?.user.embed_colour
-          : "#000000"
+          ? `${user?.user.embed_colour}`
+          : "000000"
       );
       setAuthorName(
         user?.user.embed_author_name != "undefined"
@@ -93,8 +93,8 @@ function Embed() {
                   <input
                     className="w-full bg-dark-light text-white"
                     type="color"
-                    value={color || "#000000"}
-                    onChange={(e) => setColor(e.target.value)}
+                    value={color.startsWith("#") ? color : "#" + color}
+                    onChange={(e) => setColor(e.target.value.replace("#", ""))}
                   />
                 </div>
 
@@ -155,7 +155,10 @@ function Embed() {
               className="w-full p-2 bg-rose-500 hover:bg-rose-500/70 text-white rounded-md"
               onClick={async () => {
                 const res = await fetch(
-                  `/api/updateEmbedSettings?embed_title=${title}&embed_site_name=${siteName}&embed_site_url=${siteUrl}&embed_colour=${color}&embed_author_name=${authorName}&embed_desc=${desc}`
+                  `/api/updateEmbedSettings?embed_title=${title}&embed_site_name=${siteName}&embed_site_url=${siteUrl}&embed_colour=${color.replace(
+                    "#",
+                    ""
+                  )}&embed_author_name=${authorName}&embed_desc=${desc}`
                 );
                 if (res.status == 200) {
                   alert("Embed settings updated");
@@ -178,7 +181,11 @@ function Embed() {
             style={{
               // Border on left side with colour
               borderLeft: `4px solid ${
-                !title && !siteName && !authorName && !desc ? null : color
+                !title && !siteName && !authorName && !desc
+                  ? null
+                  : color.startsWith("#")
+                  ? color
+                  : "#" + color
               }`,
             }}
           >

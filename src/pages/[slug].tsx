@@ -61,7 +61,7 @@ function ImageRoute({
         {/* Colour */}
         <meta
           property="theme-color"
-          content={embed_colour || "#000000"}
+          content={`#${embed_colour}` || "#000000"}
           key="theme-color"
         />
         {/* Author name, URL */}

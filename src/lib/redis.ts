@@ -84,15 +84,15 @@ export async function updateUserEmbedSettings(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userEntity: any = await userRepository.fetch(user[0]?.entityId);
 
-  userEntity.embed_title = embed_title != undefined ? embed_title : null;
+  userEntity.embed_title = embed_title != undefined ? embed_title : "";
   userEntity.embed_site_name =
-    embed_site_name != undefined ? embed_site_name : null;
+    embed_site_name != undefined ? embed_site_name : "";
   userEntity.embed_site_url =
-    embed_site_url != undefined ? embed_site_url : null;
-  userEntity.embed_colour = embed_colour != undefined ? embed_colour : null;
+    embed_site_url != undefined ? embed_site_url : "";
+  userEntity.embed_colour = embed_colour != undefined ? embed_colour : "";
   userEntity.embed_author_name =
-    embed_author_name != undefined ? embed_author_name : null;
-  userEntity.embed_desc = embed_desc != undefined ? embed_desc : null;
+    embed_author_name != undefined ? embed_author_name : "";
+  userEntity.embed_desc = embed_desc != undefined ? embed_desc : "";
 
   await userRepository.save(userEntity);
 
