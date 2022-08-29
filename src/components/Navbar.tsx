@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -58,7 +58,7 @@ function Navbar() {
           [&:hover>.logo>h1]:inline
           [&:hover>.profile>.details]:flex
           [&:hover>.profile]:p-2
-        [&:hover>.profile]:bg-rose-400/10
+          [&:hover>.profile]:bg-rose-400/10
           [&:hover>.profile>.logout-btn]:inline-block
           overflow-y-auto gap-2 overflow-hidden flex flex-col items-start justify-start min-h-screen py-4 px-3 bg-light dark:bg-dark-light
         "

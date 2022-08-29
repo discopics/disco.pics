@@ -1,14 +1,22 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { signIn, useSession } from "next-auth/react";
 import { useModals } from "../context/Modal";
+import { useMobileNav } from "./MobileNavbar";
 
 export default function Topbar() {
+
   const { data: session } = useSession();
   const { open } = useModals();
+  const { toggle } = useMobileNav();
 
   return (
-    <header className="sticky top-0 h-14 z-50 flex items-center justify-end px-5 bg-light dark:bg-dark-light w-full dark:text-white">
-      <div className="hidden md:block">
+    <header className="sticky top-0 h-14 z-50 flex items-center justify-between md:justify-end px-3 md:px-5 bg-light dark:bg-dark-light w-full dark:text-white">
+      <button onClick={toggle} className="flex justify-center items-center p-2 bg-rose-400/20 rounded-md text-rose-500 md:hidden">
+      <svg className="w-5 h-5" viewBox="0 0 16 16">
+        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.75 12.25h10.5m-10.5-4h10.5m-10.5-4h10.5" />
+      </svg>
+      </button>
+      <div className="block">
         {!session ? (
           <button
             className="inline-flex justify-center items-center gap-2 py-2 px-3 rounded-lg hover:bg-white/10"

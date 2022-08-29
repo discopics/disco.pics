@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useModals } from "../context/Modal";
+import { toast } from "../lib/toast";
 
 function UploadModal({ input }: { input: File }) {
   const [name, setName] = useState("Auto");
@@ -12,6 +13,7 @@ function UploadModal({ input }: { input: File }) {
     const reader = new FileReader();
     reader.readAsDataURL(input);
     reader.onload = async () => {
+      toast("Uploading...", "loading")
       const base64 = reader.result as string;
       const [name, ext] = input.name.split(".");
       const res = await fetch(
@@ -25,6 +27,7 @@ function UploadModal({ input }: { input: File }) {
       );
       const data = await res.json();
       if (data.success === 0) {
+        toast("Successfully uploaded the image!", "success");
         close();
         //   Re render the page to update the images
         window.location.reload();
@@ -48,12 +51,12 @@ function UploadModal({ input }: { input: File }) {
     <div>
       {/* Image preview in small box */}
       <div className="flex flex-col items-center justify-center overflow-y-auto">
-        <div className="md:absolute md:top-12 max-w-[400px] bg-dark rounded-md flex flex-col items-center p-3">
+        <div className="md:absolute md:top-12 max-h-[200px]  w-fit bg-dark rounded-md flex flex-col items-center p-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={URL.createObjectURL(input)}
             alt="Upload preview"
-            className=""
+            className="object-cover w-fit max-h-[200px] overflow-hidden"
           />
           <span className="mt-2 font-mono">{input.name}</span>
           <span className="text-xs text-gray-500">

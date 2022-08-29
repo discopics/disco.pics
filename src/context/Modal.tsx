@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 interface Modal {
   id: string;
   title: string;
-  content: React.FC;
+  content: React.FC | unknown;
 }
 
 interface Props {
