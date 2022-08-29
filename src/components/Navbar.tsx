@@ -47,21 +47,21 @@ function Navbar() {
     <aside className="w-fit navbar sticky top-0 hidden md:block">
       <motion.div
         initial={{ width: "4rem" }}
-        whileHover={{ width: 200 }}
-        transition={{ type: "tween", duration: 0 }}
+        whileHover={{ width: 250 }}
         className="
-        [&:hover>.dividers]:text-light-dark/50
-        [&:hover>.dividers]:h-max
-        [&:hover>.nav-item>h1]:inline
-        [&:hover>.nav-item]:gap-2 
-        [&:hover>.nav-item]:px-3
-        [&:hover>.nav-item]:justify-start
-        [&:hover>.logo>h1]:inline
-        [&:hover>.profile>.details]:flex
-        [&:hover>.profile]:p-2
+          [&:hover>.dividers]:text-light-dark/50
+          [&:hover>.dividers]:h-max
+          [&:hover>.nav-item>h1]:inline
+          [&:hover>.nav-item]:gap-2 
+          [&:hover>.nav-item]:px-3
+          [&:hover>.nav-item]:justify-start
+          [&:hover>.logo>h1]:inline
+          [&:hover>.profile>.details]:flex
+          [&:hover>.profile]:p-2
         [&:hover>.profile]:bg-rose-400/10
-        overflow-y-auto gap-2 overflow-hidden flex flex-col items-start justify-start min-h-screen py-4 px-3 bg-light dark:bg-dark-light
-      "
+          [&:hover>.profile>.logout-btn]:inline-block
+          overflow-y-auto gap-2 overflow-hidden flex flex-col items-start justify-start min-h-screen py-4 px-3 bg-light dark:bg-dark-light
+        "
       >
         <button
           onClick={() => router.push("/")}
@@ -85,27 +85,7 @@ function Navbar() {
           text="Embed Builder"
         />
         <Divider />
-        <NavItem
-          onClick={() => signOut()}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-              />
-            </svg>
-          }
-          text="Sign out"
-        />
-        <button className="flex gap-2 w-full rounded-md profile">
+        <div className="flex gap-2 w-full rounded-md profile">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={session?.user?.image ?? ""}
@@ -119,7 +99,10 @@ function Navbar() {
               #{session?.user.discriminator}
             </h1>
           </div>
-        </button>
+          <button className="ml-auto text-rose-500 hover:bg-rose-400/50 hover:text-rose-300 px-2 rounded-md hidden logout-btn">
+            <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h7v2Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5Z"></path></svg>
+          </button>
+        </div>
       </motion.div>
     </aside>
   );
