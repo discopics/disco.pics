@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   }, [ups]);
 
   return (
-    <Layout>
+    <Layout page="Your Uploads">
       <div>
         {session ? (
           <>

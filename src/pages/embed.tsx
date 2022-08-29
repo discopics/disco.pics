@@ -47,12 +47,12 @@ function Embed() {
   }, [user?.user]);
 
   return (
-    <Layout>
+    <Layout page="Embed builder">
       <Head>
         <title>Embed Builder | Disco.pics</title>
       </Head>
       <div>
-        <h1 className="text-white text-2xl m-4">Embed Builder</h1>
+        <h1 className="text-white text-2xl m-4">Custom embed</h1>
 
         <div className="flex flex-col md:flex-row">
           <div className="m-4">

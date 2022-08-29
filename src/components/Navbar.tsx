@@ -48,6 +48,8 @@ function Navbar() {
       <motion.div
         initial={{ width: "4rem" }}
         whileHover={{ width: 250 }}
+        whileTap={{ width: 250 }}
+        transition={{ ease: "easeInOut", from: { width: "4rem" } }}
         className="
           [&:hover>.dividers]:text-light-dark/50
           [&:hover>.dividers]:h-max

@@ -35,6 +35,7 @@ const userSchema = new Schema(
     embed_colour: { type: "string" },
     embed_author_name: { type: "string" },
     embed_desc: { type: "string" },
+    custom_css: { type: "text" },
   },
   {
     dataStructure: "JSON",
@@ -87,13 +88,31 @@ export async function updateUserEmbedSettings(
   userEntity.embed_title = embed_title != undefined ? embed_title : "";
   userEntity.embed_site_name =
     embed_site_name != undefined ? embed_site_name : "";
-  userEntity.embed_site_url =
-    embed_site_url != undefined ? embed_site_url : "";
+  userEntity.embed_site_url = embed_site_url != undefined ? embed_site_url : "";
   userEntity.embed_colour = embed_colour != undefined ? embed_colour : "";
   userEntity.embed_author_name =
     embed_author_name != undefined ? embed_author_name : "";
   userEntity.embed_desc = embed_desc != undefined ? embed_desc : "";
 
+  await userRepository.save(userEntity);
+
+  return userEntity;
+}
+
+export async function updateUserCss(id: string, css: string) {
+  await connect();
+
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  userEntity.custom_css = css != undefined ? css : "";
   await userRepository.save(userEntity);
 
   return userEntity;

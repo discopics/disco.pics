@@ -3,19 +3,36 @@ import { signIn, useSession } from "next-auth/react";
 import { useModals } from "../context/Modal";
 import { useMobileNav } from "./MobileNavbar";
 
-export default function Topbar() {
-
+export default function Topbar({ page }: { page?: string }) {
   const { data: session } = useSession();
   const { open } = useModals();
   const { toggle } = useMobileNav();
 
   return (
-    <header className="sticky top-0 h-14 z-50 flex items-center justify-between md:justify-end px-3 md:px-5 bg-light dark:bg-dark-light w-full dark:text-white">
-      <button onClick={toggle} className="flex justify-center items-center p-2 bg-rose-400/20 rounded-md text-rose-500 md:hidden">
-      <svg className="w-5 h-5" viewBox="0 0 16 16">
-        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.75 12.25h10.5m-10.5-4h10.5m-10.5-4h10.5" />
-      </svg>
-      </button>
+    <header className="sticky top-0 h-14 z-50 flex items-center justify-between  px-3 md:px-5 bg-light dark:bg-dark-light w-full dark:text-white">
+      <div className="flex">
+        <button
+          onClick={toggle}
+          className="flex justify-center items-center p-2 bg-rose-400/20 rounded-md text-rose-500 md:hidden"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 16 16">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              d="M2.75 12.25h10.5m-10.5-4h10.5m-10.5-4h10.5"
+            />
+          </svg>
+        </button>
+        {page && (
+          <div className="h-full flex items-center mx-3 my-auto font-semibold text-slate-300">
+            {page}
+          </div>
+        )}
+      </div>
+
       <div className="block">
         {!session ? (
           <button
@@ -44,7 +61,7 @@ export default function Topbar() {
 
                   // @ts-ignore
                   const input = e.target.files[0];
-                  open("upload", { input});
+                  open("upload", { input });
                 };
                 fileInput.click();
               }}

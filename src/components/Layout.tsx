@@ -3,7 +3,13 @@ import Navbar from "./Navbar";
 import Topbar from "./Topbar";
 import { useSession } from "next-auth/react";
 
-function Layout({ children }: { children: React.ReactNode }) {
+function Layout({
+  children,
+  page,
+}: {
+  children: React.ReactNode;
+  page?: string;
+}) {
   const { data: session } = useSession();
 
   return (
@@ -16,7 +22,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="w-full bg-dark min-h-screen">
         {/* main */}
-        <Topbar />
+        <Topbar page={page} />
         <div>{children}</div>
       </div>
     </div>

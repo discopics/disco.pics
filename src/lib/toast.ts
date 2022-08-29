@@ -17,6 +17,7 @@ export const toast = (msg: string, type?: (
     switch (type) {
         case "success":
             ts.success(msg, opts)
+            break
         case "error":
             return ts.error(msg, opts);
         case "loading":

@@ -19,6 +19,7 @@ function ImageRoute({
   embed_author_name,
   embed_desc,
   embed_colour,
+  custom_css,
 }: {
   image: Image;
   embed_title: string;
@@ -27,6 +28,7 @@ function ImageRoute({
   embed_colour: string;
   embed_author_name: string;
   embed_desc: string;
+  custom_css: string;
 }) {
   return (
     <>
@@ -99,19 +101,31 @@ function ImageRoute({
           key="twitter:card"
         />
       </Head>
-      <div className="bg-black min-h-screen pt-5">
+
+      {/* Style */}
+      {custom_css && (
+        <style jsx global>{`
+          ${custom_css}
+        `}</style>
+      )}
+
+      <div
+        className={`main-container ${
+          !custom_css && "bg-black"
+        } min-h-screen pt-5`}
+      >
         {image && (
           <>
-            <div className="h-96 relative flex flex-col">
-              <Image
+            <div className="w-full flex justify-center items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={image.img_url.replace(
                   "cdn.discordapp.com",
                   "media.discordapp.net"
                 )}
+                className="file"
+                width={600}
                 alt={image.slug}
-                layout="fill"
-                objectFit="contain"
-                unoptimized
               />
             </div>
           </>
@@ -119,7 +133,7 @@ function ImageRoute({
 
         <div className="flex flex-col justify-center items-center h-full mt-5 gap-2">
           <a
-            className="px-3 py-2 border-2 border-blue-300 hover:bg-blue-500 text-white cursor-pointer"
+            className="downloadbtn px-3 py-2 border-2 border-blue-300 hover:bg-blue-500 text-white cursor-pointer"
             href={image.img_url}
             rel="noopener noreferrer"
             target="_blank"
@@ -127,7 +141,7 @@ function ImageRoute({
             Download image {image.slug}
           </a>
 
-          <a className="text-slate-300" href="https://disco.pics">
+          <a className="bottom-text text-slate-300" href="https://disco.pics">
             Disco.pics - Image hosting
           </a>
         </div>
@@ -161,6 +175,7 @@ export async function getServerSideProps(context: NextPageContext) {
     return { props: { image: null } };
   }
   const user = await getUser(image.uploaded_by);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userJSON: any = user?.toJSON();
   return {
@@ -172,6 +187,7 @@ export async function getServerSideProps(context: NextPageContext) {
       embed_author_name: userJSON["embed_author_name"],
       embed_desc: userJSON["embed_desc"],
       embed_colour: userJSON["embed_colour"],
+      custom_css: userJSON["custom_css"],
     },
   };
 }
