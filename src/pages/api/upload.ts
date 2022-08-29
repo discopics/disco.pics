@@ -15,7 +15,7 @@ interface Request extends NextApiRequest {
   };
 }
 
-const supportedTypes = ["png", "jpg", "jpeg", "gif", "webp"];
+const supportedTypes = ["png", "jpg", "jpeg", "gif", "webp", "mp4"];
 
 export default async function handler(
   req: Request,
