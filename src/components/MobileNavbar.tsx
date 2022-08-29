@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import React from 'react'
+import React from 'react';
+import { useRouter } from 'next/router'
 
 const FastFadeContainer: Variants = {
 	hidden: { opacity: 0 },
@@ -44,6 +45,7 @@ export const useMobileNav = () => React.useContext(MobileNavContext);
 
 const MobileNavbar = () => {
 
+	const router = useRouter();
 	const { data: session } = useSession();
 	const { isOpen, toggle } = useMobileNav();
 
@@ -72,18 +74,21 @@ const MobileNavbar = () => {
 						<motion.button
 							className='text-white text-xl'
 							variants={FadeSideways}
+							onClick={() => router.push('/')}
 						>
 							Home
 						</motion.button>
 						<motion.button
 							className='text-white text-xl'
 							variants={FadeSideways}
+							onClick={() => router.push('/embed`')}
 						>
 							Embed Builder
 						</motion.button>
 						<motion.button
 							className='text-white text-xl'
 							variants={FadeSideways}
+							disabled
 						>
 							Custom CSS
 						</motion.button>
