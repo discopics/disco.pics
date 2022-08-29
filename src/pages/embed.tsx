@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import useRedisUser from "../hooks/useRedisUser";
+import { toast } from "../lib/toast";
 
 function Embed() {
   const [title, setTitle] = useState("");
@@ -161,9 +162,9 @@ function Embed() {
                   )}&embed_author_name=${authorName}&embed_desc=${desc}`
                 );
                 if (res.status == 200) {
-                  alert("Embed settings updated");
+                  toast("Embed settings updated", "success");
                 } else {
-                  alert("Error updating embed settings");
+                  toast("Error updating embed settings", "error");
                 }
               }}
             >
