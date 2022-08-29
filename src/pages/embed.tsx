@@ -23,7 +23,7 @@ function Embed() {
             <div className="mb-4">
               <label className="text-white">Title</label>
               <input
-                className="w-full p-2 bg-dark-light text-white ronded-md"
+                className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -33,7 +33,7 @@ function Embed() {
                 <div className="flex-1">
                   <label className="text-white">Site Name</label>
                   <input
-                    className="w-full p-2 bg-dark-light text-white ronded-md"
+                    className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={siteName}
                     onChange={(e) => setSiteName(e.target.value)}
@@ -43,7 +43,7 @@ function Embed() {
                 <div>
                   <label className="text-white">Site Url</label>
                   <input
-                    className="w-full p-2 bg-dark-light text-white ronded-md"
+                    className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={siteUrl}
                     onChange={(e) => setSiteUrl(e.target.value)}
@@ -56,7 +56,7 @@ function Embed() {
                 <div className="w-full">
                   <label className="text-white">Color</label>
                   <input
-                    className="w-full bg-dark-light text-white ronded-md"
+                    className="w-full bg-dark-light text-white"
                     type="color"
                     value={color}
                     onChange={(e) => setColor(e.target.value)}
@@ -66,7 +66,7 @@ function Embed() {
                 {/* Randomise button */}
                 <div className="ml-4">
                   <button
-                    className="w-full mt-3 p-2 bg-dark-light text-white ronded-md"
+                    className="w-full mt-3 p-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     onClick={() => {
                       const randomColor =
                         "#" + Math.random().toString(16).slice(2, 8);
@@ -96,7 +96,7 @@ function Embed() {
                 <div>
                   <label className="text-white">Author Name</label>
                   <input
-                    className="w-full p-2 bg-dark-light text-white ronded-md"
+                    className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
@@ -106,7 +106,7 @@ function Embed() {
                 <div>
                   <label className="text-white">Description</label>
                   <input
-                    className="w-full p-2 bg-dark-light text-white ronded-md"
+                    className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
@@ -117,7 +117,7 @@ function Embed() {
 
             {/* Submit button */}
             <button
-              className="w-full p-2 bg-blue-600 rounded-md hover:bg-blue-700 text-white ronded-md"
+              className="w-full p-2 bg-rose-500 hover:bg-rose-500/70 text-white rounded-md"
               onClick={async () => {
                 const res = await fetch(
                   `/api/updateEmbedSettings?embed_title=${title}&embed_site_name=${siteName}&embed_site_url=${siteUrl}&embed_color=${color}&embed_author_name=${authorName}&embed_desc=${desc}`
