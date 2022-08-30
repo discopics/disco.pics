@@ -21,7 +21,7 @@ const modals = [
   {
     id: "domain",
     title: "Add domain",
-    content: () => <DomainModal/>,
+    content: () => <DomainModal />,
   },
 ];
 
@@ -55,12 +55,29 @@ const MyApp: AppType = ({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#9f00a7" />
         <meta name="theme-color" content="#ffffff"></meta>
-        <script
-          async
-          defer
-          data-website-id="545e248d-8622-482d-bd52-084a6bfb0897"
-          src="https://umami.dhravya.dev/umami.js"
-        ></script>
+
+        <meta
+          name="description"
+          content="Disco.Pics is a free and open source image hosting service."
+        />
+        <meta name="og:title" content="Disco.Pics" />
+        <meta
+          name="og:description"
+          content="Disco.Pics is a free and open source image hosting service."
+        />
+        <meta name="og:image" content="https://app.disco.pics/og-image.png" />
+        <meta name="og:url" content="https://app.disco.pics" />
+        <meta name="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@disco_pics" />
+        <meta name="twitter:creator" content="@disco_pics" />
+        <meta name="twitter:title" content="Disco.Pics" />
+        <meta
+          name="twitter:description"
+          content="Disco.Pics is a free and open source image hosting service."
+        />
+        <meta name="twitter:image" content="https://app.disco.pics/og-image.png" />
+        
       </Head>
       <Toaster />
       <div className="dark">
