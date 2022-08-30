@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { toast } from "../lib/toast";
+import CodeMirror from '@uiw/react-codemirror';
+import { css } from "@codemirror/lang-css";
+import { githubDark } from "@uiw/codemirror-theme-github";
+import prettier from 'prettier';
+import { Status } from "../types/Request";
+import { m } from "framer-motion";
 
 function CustomCSS() {
+  
   const [customCSS, setCustomCSS] = useState("");
 
   const minifyCSS = (css: string) => {
@@ -11,6 +18,23 @@ function CustomCSS() {
       .replace(/\s*([{}])\s*/g, "$1")
       .replace(/;}/g, "}");
   };
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("/api/user");
+      const user = await response.json();
+      if (user.success === Status.Success) {
+        const resp = await fetch('/api/formatCss', {
+          method: "POST",
+          body: user.data.user.custom_css
+        })
+        const formatted = await resp.json();
+        if (formatted.success === Status.Success) {
+          setCustomCSS(formatted.data);
+        }
+      }
+    })();
+  }, [])
 
   return (
     <div>
@@ -24,7 +48,7 @@ function CustomCSS() {
               onClick={async () => {
                 // Minify the CSS
                 const minifiedCSS = await minifyCSS(customCSS);
-                const res = await fetch("/api/updateCss?css=" + minifiedCSS);
+                const res = await fetch("/api/updateCss", { method: "POST", body: minifiedCSS });
                 if (res.status == 200) {
                   toast("CSS settings updated", "success");
                 } else {
@@ -37,11 +61,13 @@ function CustomCSS() {
           </div>
         </div>
         <div className="flex flex-col justify-center items-center h-full mt-5 gap-2 mx-5">
-          <textarea
-            className="w-full h-64 p-2 border-2 border-slate-500 rounded-md bg-dark-light text-white"
-            placeholder="Enter your custom CSS here"
+          <CodeMirror
             value={customCSS}
-            onChange={(e) => setCustomCSS(e.target.value)}
+            onChange={(value) => setCustomCSS(value)}
+            height="16rem"
+            extensions={[css()]}
+            theme={githubDark}
+            className="w-full p-2 border-2 border-slate-500 rounded-md"
           />
         </div>
       </Layout>

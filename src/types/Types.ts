@@ -18,6 +18,7 @@ export type UserType = {
     embed_colour: string;
     embed_author_name: string;
     embed_desc: string;
+    custom_css: string;
   };
   images: ImageType[];
 };
