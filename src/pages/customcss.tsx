@@ -60,14 +60,15 @@ function CustomCSS() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center h-full mt-5 gap-2 mx-5">
+        <div className="flex flex-row flex-wrap justify-center items-center h-full mt-5 gap-2 mx-5">
+          <img src="https://cdn.discordapp.com/attachments/1010857352645316658/1014055092279853107/disco.jpg" />
           <CodeMirror
             value={customCSS}
             onChange={(value) => setCustomCSS(value)}
-            height="16rem"
+            height="400px"
             extensions={[css()]}
             theme={githubDark}
-            className="w-full p-2 border-2 border-slate-500 rounded-md"
+            className="p-2 flex-grow border-2 border-slate-500 rounded-md"
           />
         </div>
       </Layout>
