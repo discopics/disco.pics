@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useModals } from "../context/Modal";
 import { toast } from "../lib/toast";
 
 function DomainModal() {
   const [domain, setDomain] = useState("");
+  const [err, setErr] = useState("");
+  const [verification, setVerification] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { close } = useModals();
+
+  useEffect(() => {
+    const randomString = Math.random().toString(36).substring(2, 12);
+    setVerification(randomString);
+  }, []);
 
   const getCNAMEValue = (domain: string) => {
     // img.dhravya.dev => img
@@ -39,24 +49,53 @@ function DomainModal() {
               <tr className="border p-2">
                 <td className="border p-2">CNAME</td>
                 <td className="border p-2">{getCNAMEValue(domain)}</td>
-                <td className="border p-2">dns.disco.pics</td>
+                <td className="border p-2">cname.vercel-dns.com</td>
+              </tr>
+              <tr className="border p-2">
+                <td className="border p-2">TXT</td>
+                <td className="border p-2">_disco</td>
+                <td className="border p-2">{verification}</td>
               </tr>
             </table>
 
             <button
               onClick={async () => {
                 toast("Adding domain", "loading");
-                const res = await fetch("/api/addDomain?domain=" + domain);
+                setLoading(true);
+                const res = await fetch(
+                  `/api/domain?domain=${domain}&verification=${verification}`
+                );
+                const data = await res.json();
+                setLoading(false);
                 if (res.status === 200) {
                   toast("Domain added", "success");
+                  close();
+                  window.location.reload();
                   return;
                 }
-                toast("Error adding domain", "error");
+                if (data.error == "DOMAIN_ALREADY_EXISTS") {
+                  toast("Domain already exists", "error");
+                  setErr("Domain already exists");
+                  return;
+                }
+                if (data.error == "DOMAIN_LIMIT_REACHED") {
+                  toast("Domain limit reached", "error");
+                  setErr("Domain limit reached");
+                  return;
+                }
+                if (data.error == "CNAME_ERROR") {
+                  toast("CNAME records are invalid", "error");
+                  setErr(
+                    "CNAME records are invalid. Please recheck your records and try again."
+                  );
+                }
               }}
-              className="flex mt-auto items-center py-2 px-4 gap-1 text-base text-gray-900 rounded-lg dark:text-rose-500 font-normal hover:bg-gray-100 dark:bg-rose-400/10 dark:hover:bg-rose-400/20"
+              className="flex mt-5 items-center py-2 px-4 gap-1 text-base text-gray-900 rounded-lg dark:text-rose-500 font-normal hover:bg-gray-100 dark:bg-rose-400/10 dark:hover:bg-rose-400/20"
             >
-              Add domain
+              Add domain {loading && "Checking..."}
             </button>
+
+            {err && <span className="text-red-500 mt-2">{err}</span>}
           </div>
         )}
       </div>

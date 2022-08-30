@@ -205,7 +205,7 @@ export async function addUserDomain(id: string, domain: string) {
   const userEntity: any = await userRepository.fetch(user[0]?.entityId);
 
   if (userEntity.domains.includes(domain)) {
-    return;
+    return "DOMAIN_ALREADY_EXISTS";
   }
 
   if (userEntity.domains) {
@@ -213,6 +213,29 @@ export async function addUserDomain(id: string, domain: string) {
   } else {
     userEntity.domains = [domain];
   }
+
+  await userRepository.save(userEntity);
+
+  return userEntity;
+}
+
+export async function deleteUserDomain(id: string, domain: string) {
+  await connect();
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  if (!userEntity.domains.includes(domain)) {
+    return "DOMAIN_NOT_FOUND";
+  }
+
+  userEntity.domains = userEntity.domains.filter((d: string) => d !== domain);
 
   await userRepository.save(userEntity);
 

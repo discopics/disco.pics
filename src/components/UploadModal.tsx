@@ -22,7 +22,7 @@ function UploadModal({ input }: { input: File }) {
       const res = await fetch(
         `/api/upload?name=${name}&type=${ext}${
           slug == "Auto" ? "" : "&slug=" + slug
-        }&domain=${domain}`,
+        }&domain=${domain ? domain : "disco.pics"}`,
         {
           method: "POST",
           body: base64,

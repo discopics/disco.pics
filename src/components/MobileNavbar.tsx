@@ -104,6 +104,16 @@ const MobileNavbar = () => {
             >
               Custom CSS
             </motion.button>
+            <motion.button
+              className="text-white text-xl"
+              variants={FadeSideways}
+              onClick={() => {
+                router.push("/domains");
+                toggle();
+              }}
+            >
+              Domains
+            </motion.button>
           </motion.div>
 
           <motion.div

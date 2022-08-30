@@ -14,7 +14,9 @@ export const serverSchema = z.object({
   DISCORD_TOKEN: z.string(),
   DISCORD_IMAGES_CHANNEL_ID: z.string(),
   REDIS_URL: z.string(),
-  GET_KEY: z.string()
+  GET_KEY: z.string(),
+  VERCEL_TOKEN: z.string(),
+  VERCEL_PROJECT_ID: z.string(),
 });
 
 /**
