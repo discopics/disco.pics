@@ -18,7 +18,10 @@ function UploadModal({ input }: { input: File }) {
     reader.onload = async () => {
       toast("Uploading...", "loading");
       const base64 = reader.result as string;
-      const [name, ext] = input.name.split(".");
+
+      const ext = input.name.split(".").pop();
+      const name = input.name.split(".").slice(0, -1);
+
       const res = await fetch(
         `/api/upload?name=${name}&type=${ext}${
           slug == "Auto" ? "" : "&slug=" + slug
