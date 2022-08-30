@@ -62,6 +62,7 @@ function Embed() {
                 className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                 type="text"
                 value={title}
+                placeholder="Title"
                 onChange={(e) => setTitle(e.target.value)}
               />
 
@@ -72,6 +73,7 @@ function Embed() {
                     className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={siteName}
+                    placeholder="Site Name"
                     onChange={(e) => setSiteName(e.target.value)}
                   />
                 </div>
@@ -82,6 +84,7 @@ function Embed() {
                     className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={siteUrl}
+                    placeholder="Site Url"
                     onChange={(e) => setSiteUrl(e.target.value)}
                   />
                 </div>
@@ -135,6 +138,7 @@ function Embed() {
                     className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={authorName}
+                    placeholder="Author Name"
                     onChange={(e) => setAuthorName(e.target.value)}
                   />
                 </div>
@@ -145,6 +149,7 @@ function Embed() {
                     className="w-full px-3 py-2 focus:outline-none border border-transparent focus:border-rose-500 bg-rose-400/5 text-rose-500 rounded-md"
                     type="text"
                     value={desc}
+                    placeholder="Description"
                     onChange={(e) => setDesc(e.target.value)}
                   />
                 </div>
