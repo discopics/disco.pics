@@ -22,7 +22,7 @@ export default async function handler(
   const session = await getServerSession(req, res, nextAuthOptions);
 
   if (!session) {
-    res.send({
+    return res.status(401).json({
       success: Status.Error,
       error:
         "You must be signed in to view the protected content on this page.",

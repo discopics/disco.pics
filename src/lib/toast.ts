@@ -23,7 +23,7 @@ export const toast = (msg: string, type?: (
         case "loading":
             opts.iconTheme.secondary = opts.iconTheme.primary;
             opts.iconTheme.primary = "#FFFFFF";
-            return ts.loading(msg, opts);
+            return ts.loading(msg, {...opts, "duration": 3000});
         default:
             return ts(msg, opts);
     }

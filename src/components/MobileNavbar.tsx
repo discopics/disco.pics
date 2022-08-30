@@ -98,7 +98,7 @@ const MobileNavbar = () => {
               className="text-white text-xl"
               variants={FadeSideways}
               onClick={() => {
-                router.push("/customcss");
+                router.push("/css");
                 toggle();
               }}
             >

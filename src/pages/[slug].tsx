@@ -156,7 +156,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const url =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://disco.pics";
+      : "https://app.disco.pics";
 
   const getImage = async () => {
     const imgUrl = await fetch(`${url}/api/getImage?slug=${slug}`);
