@@ -37,7 +37,7 @@ const NavItem = ({
       className="-mb-1 nav-item w-full justify-center items-center hover:text-rose-500 text-rose-400 transition nav-item rounded-md h-10 pb-1 flex hover:bg-rose-400/10"
     >
       {icon}
-      <h1 className="-mb-1 hidden">{text}</h1>
+      <h1 className="hidden">{text}</h1>
     </button>
   );
 };
