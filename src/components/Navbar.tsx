@@ -99,7 +99,7 @@ function Navbar() {
         />
         <Divider text="Customization" />
         <NavItem
-          onClick={() => router.push("/customcss")}
+          onClick={() => router.push("/css")}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"

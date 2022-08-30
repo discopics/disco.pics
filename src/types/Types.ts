@@ -4,6 +4,7 @@ export type ImageType = {
   img_url: string;
   id: string;
   slug: string;
+  domain: string;
 };
 
 export type UserType = {
@@ -19,6 +20,7 @@ export type UserType = {
     embed_author_name: string;
     embed_desc: string;
     custom_css: string;
+    domains: string[];
   };
   images: ImageType[];
 };

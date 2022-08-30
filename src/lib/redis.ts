@@ -16,6 +16,7 @@ async function connect() {
 class Image extends Entity {}
 const schema = new Schema(Image, {
   uploaded_by: { type: "string", indexed: true },
+  domain: { type: "string", indexed: true },
   slug: { type: "string", indexed: true },
   img_url: { type: "string" },
   uploaded_at: { type: "date" },
@@ -36,6 +37,7 @@ const userSchema = new Schema(
     embed_author_name: { type: "string" },
     embed_desc: { type: "string" },
     custom_css: { type: "text" },
+    domains: { type: "string[]" },
   },
   {
     dataStructure: "JSON",
@@ -53,13 +55,15 @@ export async function createIndex() {
   console.log("Index created");
 }
 
-export async function checkIfSlugExists(slug: string) {
+export async function checkIfSlugExists(slug: string, domain?: string) {
   await connect();
   const imageRepository = client.fetchRepository(schema);
   const result = await imageRepository
     .search()
     .where("slug")
-    .equals(slug)
+    .is.eq(slug)
+    .and("domain")
+    .eq(domain || "disco.pics")
     .all();
   return result.length > 0;
 }
@@ -118,13 +122,15 @@ export async function updateUserCss(id: string, css: string) {
   return userEntity;
 }
 
-export async function deleteImage(slug: string) {
+export async function deleteImage(slug: string, domain?: string) {
   await connect();
   const imageRepository = client.fetchRepository(schema);
   const result = await imageRepository
     .search()
     .where("slug")
-    .equals(slug)
+    .is.eq(slug)
+    .and("domain")
+    .eq(domain || "disco.pics")
     .first();
 
   if (result) {
@@ -172,10 +178,43 @@ export async function getAllImagesByUser(userId: string) {
   return images;
 }
 
-export async function getImage(slug: string) {
+export async function getImage(slug: string, domain?: string) {
   await connect();
   const repository = client.fetchRepository(schema);
 
-  const image = await repository.search().where("slug").eq(slug).first();
+  const image = await repository
+    .search()
+    .where("slug")
+    .is.eq(slug)
+    .and("domain")
+    .eq(domain || "disco.pics")
+    .first();
   return image;
+}
+
+export async function addUserDomain(id: string, domain: string) {
+  await connect();
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  if (userEntity.domains.includes(domain)) {
+    return;
+  }
+
+  if (userEntity.domains) {
+    userEntity.domains.push(domain);
+  } else {
+    userEntity.domains = [domain];
+  }
+
+  await userRepository.save(userEntity);
+
+  return userEntity;
 }

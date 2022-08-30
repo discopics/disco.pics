@@ -6,6 +6,7 @@ import UploadModal from "../components/UploadModal";
 import Head from "next/head";
 import MobileNavbar, { MobilNavProvider } from "../components/MobileNavbar";
 import { Toaster } from "react-hot-toast";
+import DomainModal from "../components/DomainModal";
 
 const modals = [
   {
@@ -16,6 +17,11 @@ const modals = [
       ups: string;
       setUps: (ups: string) => void;
     }) => <UploadModal {...props} />,
+  },
+  {
+    id: "domain",
+    title: "Add domain",
+    content: () => <DomainModal/>,
   },
 ];
 
@@ -57,17 +63,19 @@ const MyApp: AppType = ({
         ></script>
       </Head>
       <Toaster />
-      <SessionProvider session={session}>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <MobilNavProvider>
-          <MobileNavbar />
-          <ModalProvider modals={modals}>
-            <ModalManager />
-            <Component {...pageProps} />
-          </ModalProvider>
-        </MobilNavProvider>
-      </SessionProvider>
+      <div className="dark">
+        <SessionProvider session={session}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <MobilNavProvider>
+            <MobileNavbar />
+            <ModalProvider modals={modals}>
+              <ModalManager />
+              <Component {...pageProps} />
+            </ModalProvider>
+          </MobilNavProvider>
+        </SessionProvider>
+      </div>
     </>
   );
 };

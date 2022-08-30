@@ -11,6 +11,7 @@ interface Request extends NextApiRequest {
   query: {
     name: string;
     type: string;
+    domain: string;
     slug?: string;
   };
 }
@@ -30,12 +31,12 @@ export default async function handler(
   req: Request,
   res: NextApiResponse<Response<unknown, unknown>>
 ) {
-  const { name, type } = req.query;
+  const { name, type, domain } = req.query;
 
   const session = await getServerSession(req, res, nextAuthOptions);
 
   if (!session) {
-    res.send({
+    return res.status(401).json({
       success: Status.Error,
       error:
         "You must be signed in to view the protected content on this page.",
@@ -56,11 +57,35 @@ export default async function handler(
     });
   }
 
+  if (session == null) {
+    return res.status(500).json({
+      success: Status.Error,
+      error: "Session is null",
+    });
+  }
   const imageBase64 = req.body;
   const buff = Buffer.from(
     imageBase64.replace(/^data:image\/\w+;base64,/, ""),
     "base64"
   );
+  const randomlyGenerated3characterString = Math.random()
+    .toString(36)
+    .substring(2, 5);
+  const slug =
+    req.query.slug ||
+    `${session.user.name.slice(
+      0,
+      3
+    )}-${randomlyGenerated3characterString}.${type}`;
+
+  const exists = await checkIfSlugExists(slug);
+
+  if (exists) {
+    return res.status(400).json({
+      success: Status.Error,
+      error: "Slug already exists",
+    });
+  }
 
   const client = new Discord({ version: "10" }).setToken(env.DISCORD_TOKEN);
 
@@ -81,32 +106,6 @@ export default async function handler(
       }
     );
 
-    if (session == null) {
-      return res.status(500).json({
-        success: Status.Error,
-        error: "Session is null",
-      });
-    }
-
-    const randomlyGenerated3characterString = Math.random()
-      .toString(36)
-      .substring(2, 5);
-    const slug =
-      req.query.slug ||
-      `${session.user.name.slice(
-        0,
-        3
-      )}-${randomlyGenerated3characterString}.${type}`;
-
-    const exists = await checkIfSlugExists(slug);
-
-    if (exists) {
-      return res.status(400).json({
-        success: Status.Error,
-        error: "Slug already exists",
-      });
-    }
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     resp["id"] = await createImage({
@@ -116,6 +115,7 @@ export default async function handler(
       // @ts-ignore
       img_url: resp.attachments[0].url,
       uploaded_at: new Date(),
+      domain: domain,
     });
 
     return res.status(200).json({

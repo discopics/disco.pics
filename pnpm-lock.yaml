@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@codemirror/lang-css': ^6.0.0
   '@codemirror/view': ^6.2.1
+  '@layered/dns-records': ^1.5.0
   '@types/node': 18.7.13
   '@types/prettier': 2.7.0
   '@types/react': 18.0.14
@@ -33,6 +34,7 @@ specifiers:
 dependencies:
   '@codemirror/lang-css': 6.0.0
   '@codemirror/view': 6.2.1
+  '@layered/dns-records': 1.5.0
   '@uiw/codemirror-theme-github': 4.11.6
   '@uiw/react-codemirror': 4.11.6_iv5srfp7h4ph633jzclnyyi454
   csstype: 3.1.0
@@ -230,6 +232,12 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@layered/dns-records/1.5.0:
+    resolution: {integrity: sha512-Y6MVMzWpO4R2ZxdXwH59hLcIhxk83SKJFIm7Nad4jqBjR7HyEB0AmKl5RszrhsnapVX8L7JXxOEqNmcEdTRhPA==}
+    dependencies:
+      punycode: 2.1.1
+    dev: false
 
   /@lezer/common/1.0.0:
     resolution: {integrity: sha512-ohydQe+Hb+w4oMDvXzs8uuJd2NoA3D8YDcLiuDsLqH+yflDTPEpgCsWI3/6rH5C3BAedtH1/R51dxENldQceEA==}
@@ -2416,7 +2424,6 @@ packages:
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
-    dev: true
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}

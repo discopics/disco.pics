@@ -6,7 +6,7 @@ import { env } from "../../env/server.mjs";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (env.NODE_ENV == "development") {
     await createIndex();
-    res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true });
   }
-  res.status(400).json({ ok: false });
+  return res.status(400).json({ ok: false });
 };
