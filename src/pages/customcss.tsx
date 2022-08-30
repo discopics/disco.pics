@@ -62,7 +62,7 @@ function CustomCSS() {
             </button>
           </div>
         </div>
-        <div className="flex flex-row flex-wrap justify-center items-center h-full mt-5 gap-2 mx-5">
+        <div className="flex flex-row flex-wrap lg:flex-nowrap justify-center items-center h-full mt-5 gap-2 mx-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img alt="help" className="flex-shrink w-[500px]" src="https://cdn.discordapp.com/attachments/1010857352645316658/1014055092279853107/disco.jpg" />
           {loading ? (
