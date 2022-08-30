@@ -78,7 +78,7 @@ export default async function handler(
       3
     )}-${randomlyGenerated3characterString}.${type}`;
 
-  const exists = await checkIfSlugExists(slug);
+  const exists = await checkIfSlugExists(slug, domain);
 
   if (exists) {
     return res.status(400).json({

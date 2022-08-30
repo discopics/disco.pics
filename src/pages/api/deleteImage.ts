@@ -7,6 +7,7 @@ import { deleteImage } from "../../lib/redis";
 interface Request extends NextApiRequest {
   query: {
     slug: string;
+    domain: string;
   };
 }
 
@@ -14,7 +15,7 @@ export default async function handler(
   req: Request,
   res: NextApiResponse<Response<unknown, unknown>>
 ) {
-  const { slug } = req.query;
+  const { slug, domain } = req.query;
 
   const session = await getServerSession(req, res, nextAuthOptions);
 
@@ -25,7 +26,7 @@ export default async function handler(
         "You must be signed in to view the protected content on this page.",
     });
   }
-  const img = await deleteImage(slug);
+  const img = await deleteImage(slug, domain);
 
   //   TODO: DELETE MESSAGE FROM DISCORD
 

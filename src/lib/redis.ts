@@ -55,7 +55,7 @@ export async function createIndex() {
   console.log("Index created");
 }
 
-export async function checkIfSlugExists(slug: string, domain?: string) {
+export async function checkIfSlugExists(slug: string, domain: string) {
   await connect();
   const imageRepository = client.fetchRepository(schema);
   const result = await imageRepository
@@ -122,7 +122,7 @@ export async function updateUserCss(id: string, css: string) {
   return userEntity;
 }
 
-export async function deleteImage(slug: string, domain?: string) {
+export async function deleteImage(slug: string, domain: string) {
   await connect();
   const imageRepository = client.fetchRepository(schema);
   const result = await imageRepository
@@ -178,7 +178,7 @@ export async function getAllImagesByUser(userId: string) {
   return images;
 }
 
-export async function getImage(slug: string, domain?: string) {
+export async function getImage(slug: string, domain: string) {
   await connect();
   const repository = client.fetchRepository(schema);
 
