@@ -1,4 +1,5 @@
 import { Client, Entity, Schema, EntityData } from "redis-om";
+import { cipher } from "./hushh";
 
 const client = new Client();
 
@@ -217,6 +218,58 @@ export async function addUserDomain(id: string, domain: string) {
   await userRepository.save(userEntity);
 
   return userEntity;
+}
+
+export async function getCurrentUserToken(id: string) {
+  await connect();
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  return cipher(id + "-" + userEntity.token_number);
+}
+
+export async function reGenerateUserToken(id: string) {
+  await connect();
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  userEntity.token_number = Math.floor(Math.random() * 1000000);
+  await userRepository.save(userEntity);
+
+  return cipher(id + "-" + userEntity.token_number);
+}
+
+export async function verifyAndGetUser(id: string, token_number: number) {
+  // Returns true if the user exists, and the token is correct
+  await connect();
+  const userRepository = client.fetchRepository(userSchema);
+  const user = await userRepository.search().where("id").equals(id).all();
+  if (user.length === 0) {
+    return false;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userEntity: any = await userRepository.fetch(user[0]?.entityId);
+
+  if (userEntity.token_number === token_number) {
+    return userEntity;
+  }
+  return false;
 }
 
 export async function deleteUserDomain(id: string, domain: string) {

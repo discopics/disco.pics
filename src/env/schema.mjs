@@ -17,7 +17,7 @@ export const serverSchema = z.object({
   GET_KEY: z.string(),
   VERCEL_TOKEN: z.string(),
   VERCEL_PROJECT_ID: z.string(),
-  HASH_NUMBER: z.number(),
+  HASH_NUMBER: z.string(),
 });
 
 /**

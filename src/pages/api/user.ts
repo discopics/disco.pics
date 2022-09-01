@@ -46,7 +46,7 @@ export default async function handler(
           id: session.user.id,
           created_at: new Date().toISOString(),
           email: session.user.email,
-          token_number: 0,
+          token_number: Math.floor(Math.random() * 1000000),
         });
       }
     }

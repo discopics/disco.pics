@@ -2,7 +2,8 @@
 import { env } from "../env/server.mjs";
 
 const chars = `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-1234567890`;
-const shuffled = shuffle(chars.split(""), env.HASH_NUMBER);
+const HASH_NUMBER = parseInt(env.HASH_NUMBER);
+const shuffled = shuffle(chars.split(""), HASH_NUMBER);
 
 function random(seed: number) {
   const x = Math.sin(seed++) * 10000;
@@ -30,7 +31,7 @@ const cipher = (text: string) => {
   let returned_text = "";
 
   for (let i = 0; i < text.length; i++) {
-    returned_text += shuffled[chars.indexOf(text[i])];
+    returned_text += shuffled[chars.indexOf(text[i]!)];
   }
 
   return extend(returned_text);
@@ -38,12 +39,12 @@ const cipher = (text: string) => {
 
 const decipher = (text: string) => {
   let returned_text = "";
-  const index = Math.floor(random(env.HASH_NUMBER) * (text.length / 2));
+  const index = Math.floor(random(HASH_NUMBER) * (text.length / 2));
 
   for (let i = 0; i < text.length; i++) {
-    returned_text += chars[shuffled.indexOf(text[i])];
+    returned_text += chars[shuffled.indexOf(text[i]!)];
   }
-  const total = parseInt(text[index]);
+  const total = parseInt(text[index]!);
   const str = parseInt(text.slice(index + 1, index + total + 1));
   return returned_text.slice(text.length - str);
 };
@@ -56,7 +57,7 @@ const extend = (text: string, length = 60) => {
   }
 
   // Random index to store the length of the string
-  const index = Math.floor(random(env.HASH_NUMBER) * (length / 2));
+  const index = Math.floor(random(HASH_NUMBER) * (length / 2));
 
   const storage_string =
     text.length.toString().length.toString() + text.length.toString();
@@ -70,8 +71,12 @@ const extend = (text: string, length = 60) => {
       if (total >= length) {
         break;
       }
+
       // Add a random character
-      returned += shuffled[Math.floor(random(Math.random()) * shuffled.length)];
+      returned +=
+        shuffled[
+          Math.floor(random(random(i) + random(HASH_NUMBER)) * shuffled.length)
+        ];
       total++;
     }
   }
