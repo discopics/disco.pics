@@ -11,7 +11,7 @@ import { decipher } from "../../lib/hushh";
 
 type Request = NextApiRequest & {
   query: {
-    currentToken: string;
+    currentToken?: string;
   };
 };
 
@@ -22,27 +22,11 @@ export default async function handler(
   const session = await getServerSession(req, res, nextAuthOptions);
   const { currentToken } = req.query;
 
-  if (!session || !currentToken) {
+  if (!session) {
     return res.status(401).json({
       success: Status.Error,
       error:
         "You must be signed in to view the protected content on this page.",
-    });
-  }
-
-  const [id, n] = decipher(currentToken).split("-");
-  if (!id || !n || id != session.user.id) {
-    return res.status(401).json({
-      success: Status.Error,
-      error: "Invalid auth token.",
-    });
-  }
-  
-  const verify = await verifyAndGetUser(id, parseInt(n));
-  if (!verify) {
-    return res.status(401).json({
-      success: Status.Error,
-      error: "Invalid auth token.",
     });
   }
 
@@ -56,6 +40,30 @@ export default async function handler(
   }
 
   if (req.method == "DELETE") {
+    if (!currentToken) {
+      return res.status(400).json({
+        success: Status.Error,
+        error:
+          "You need to send the currentToken in order to regenerate a new one",
+      });
+    }
+
+    const [id, n] = decipher(currentToken).split("-");
+    if (!id || !n || id != session.user.id) {
+      return res.status(401).json({
+        success: Status.Error,
+        error: "Invalid auth token.",
+      });
+    }
+
+    const verify = await verifyAndGetUser(id, parseInt(n));
+    if (!verify) {
+      return res.status(401).json({
+        success: Status.Error,
+        error: "Invalid auth token.",
+      });
+    }
+
     const token = await reGenerateUserToken(user.id);
     return res.status(200).json({
       success: Status.Success,
