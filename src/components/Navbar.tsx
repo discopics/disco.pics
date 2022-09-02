@@ -153,7 +153,7 @@ function Navbar() {
 
         <Divider text="Integrations" />
         <NavItem
-          onClick={() => toast("Coming soon!")}
+          onClick={() => router.push("/user/api")}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
