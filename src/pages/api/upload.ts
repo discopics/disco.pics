@@ -5,7 +5,12 @@ import { REST as Discord } from "discord.js";
 import { env } from "../../env/server.mjs";
 import { unstable_getServerSession as getServerSession } from "next-auth";
 import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
-import { checkIfSlugExists, createImage } from "../../lib/redis";
+import {
+  checkIfSlugExists,
+  createImage,
+  verifyAndGetUser,
+} from "../../lib/redis";
+import { decipher } from "../../lib/hushh";
 
 interface Request extends NextApiRequest {
   query: {
@@ -13,6 +18,9 @@ interface Request extends NextApiRequest {
     type: string;
     domain: string;
     slug?: string;
+  };
+  headers: {
+    auth?: string;
   };
 }
 
@@ -32,10 +40,10 @@ export default async function handler(
   res: NextApiResponse<Response<unknown, unknown>>
 ) {
   const { name, type, domain } = req.query;
-
+  const { auth } = req.headers;
   const session = await getServerSession(req, res, nextAuthOptions);
 
-  if (!session) {
+  if (!session && !auth && session === null) {
     return res.status(401).json({
       success: Status.Error,
       error:
@@ -43,7 +51,32 @@ export default async function handler(
     });
   }
 
-  if (!name || !type) {
+  let user = null;
+
+  if (session) {
+    user = session.user;
+  } else if (auth) {
+    const [id, n] = decipher(auth).split("-");
+    if (!id || !n) {
+      return res.status(401).json({
+        success: Status.Error,
+        error: "Invalid auth token.",
+      });
+    }
+
+    const getUser = await verifyAndGetUser(id, parseInt(n));
+    if (!getUser) {
+      return res.status(401).json({
+        success: Status.Error,
+        error: "Invalid auth token.",
+      });
+    }
+    user = getUser.toJSON();
+  }
+
+  console.log(user);
+
+  if (!name || !type || !domain) {
     return res.status(400).json({
       success: Status.Error,
       error: "Invalid query",
@@ -57,12 +90,6 @@ export default async function handler(
     });
   }
 
-  if (session == null) {
-    return res.status(500).json({
-      success: Status.Error,
-      error: "Session is null",
-    });
-  }
   const imageBase64 = req.body;
   const buff = Buffer.from(
     imageBase64.replace(/^data:image\/\w+;base64,/, ""),
@@ -70,13 +97,8 @@ export default async function handler(
   );
   const randomlyGenerated3characterString = Math.random()
     .toString(36)
-    .substring(2, 5);
-  const slug =
-    req.query.slug ||
-    `${session.user.name.slice(
-      0,
-      3
-    )}-${randomlyGenerated3characterString}.${type}`;
+    .substring(2, 6);
+  const slug = req.query.slug || `${randomlyGenerated3characterString}.${type}`;
 
   const exists = await checkIfSlugExists(slug, domain);
 
@@ -93,9 +115,6 @@ export default async function handler(
     const resp = await client.post(
       `/channels/${env.DISCORD_IMAGES_CHANNEL_ID}/messages`,
       {
-        body: {
-          content: `Uploaded by ${session?.user.id} (${session?.user.name}#${session?.user.discriminator})`,
-        },
         files: [
           {
             name: name + "." + type,
@@ -109,7 +128,7 @@ export default async function handler(
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     resp["id"] = await createImage({
-      uploaded_by: session.user.id,
+      uploaded_by: user.id,
       slug: slug,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -120,7 +139,9 @@ export default async function handler(
 
     return res.status(200).json({
       success: Status.Success,
-      data: resp,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      data: { url: "https://" + domain + "/" + slug },
     });
   } catch (err) {
     console.log(err);
