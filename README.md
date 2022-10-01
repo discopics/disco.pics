@@ -1,3 +1,8 @@
+# This project has been discontinued. Use at your own risk
+
+---
+
+
 # Disco.pics
 
 Fast image hosting made easy.
